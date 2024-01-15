@@ -12,8 +12,8 @@
       .btn.btn-xs.btn-accent( :style="{transform: `translateX(-50%) rotate(${pos.angle + 90}deg)`,  transformOrigin: `50% 150%`}") 123
     //- :width="svgElBounds.width.value"
   div.w-full(ref="svgElWrapper" class="h-[200px]")
-    //- :viewBox="`${-t.x/t.k} -1 ${svgElBounds.width.value/t.k} ${201}`"
-    svg(
+    svg.pointer-events-none(
+      :viewBox="`${-t.x/t.k} -1 ${svgElBounds.width.value/t.k} ${201}`"
       ref="svgEl"
       preserveAspectRatio="none"
       style="backface-visibility: hidden; transform-style: flat;"
@@ -34,13 +34,14 @@
           path.fill-base-content(
             :transform="`scale(${1/t.k},${1})`"
             :d='`M 0 0 L 10 5 L 0 10 z`')
-      svg(
+      //- svg(
         :viewBox="`${-t.x/t.k} -1 ${svgElBounds.width.value/t.k} ${201}`"
         preserveAspectRatio="none"
         style="backface-visibility: hidden; transform-style: flat;"
         :height="`${svgElBounds.height.value}px`"
         :width="`${svgElBounds.width.value}px`"        
         )
+      g
         //- g
           path.fill-none.stroke-secondary( stroke-width="2" :d="l(arr)")
         //- g(style="backface-visibility: hidden; transform-style: flat;" ref="svgGroupEl" :transform="`scale(${t.k},1) translate(${t.x/t.k},0)`")
@@ -55,14 +56,14 @@
           //- path.fill-accent(:d="` M ${dO.sp[0] + t.x} 0 V 200 H ${dO.mp[0] +t.x} V -200`")
           path.fill-accent(:d="` M ${(dO.sp[0] - t.x)/t.k} 0 V 200 H ${(dO.mp[0] - t.x)/t.k} V -200`")
 
-        measurementsComp
+        measurementsComp.pointer-events-auto
         //- g(
           v-for="m in mm"
           )
           path.fill-accent(
             :d="` M ${m.x1} 0 V 200 H ${m.x2} V -200`")
 
-        g.ticks.pointer-events-none(
+        g.ticks(
             v-if="xScale.ticks"
           )
           g(
@@ -79,9 +80,9 @@
               text-anchor="middle"
               ) {{ tick/1000 }}
         //- g.chart(:transform="`translate(0,${sizes.chart.y})`")
-        g.chart.pointer-events-none
+        g.chart
           path.fill-none.stroke-secondary(stroke-width="2" :d="genLine(cumsumData)" dy="123")
-        g.arrows.pointer-events-none(
+        g.arrows(
           v-if="xScaleOrigin((props.data[pos.bb]) * t.k) > 15"
           )
           path.fill-none.stroke-base-content(
@@ -207,6 +208,7 @@ const measurementsComp = () => {
       // console.log("MMMM");
       const [x,y] = t.invert(pointer(e, svgEl.value))
       let dx = x - m.sp[0]
+      dx *= t.k
       if (type == 'resize-x1') {
         m.x1 = m.origin[0] + dx 
         return
@@ -331,15 +333,15 @@ onMounted(() => {
     })
     .on('zoom', e => {
       // console.log(e);
-      console.log(e.sourceEvent.target === svgEl.value);
+      // console.log(e.sourceEvent.target === svgEl.value);
       // console.log(e);
       // console.log('zoom	');
       xScale.value = e.transform.rescaleX(xScaleOrigin.value)
       // pos.ss = e.transform
       Object.assign(t, e.transform)
     });
-  // svgElWrapperSel.value.call(zoomObj);
-  svgSel.value.call(zoomObj)
+  svgElWrapperSel.value.call(zoomObj);
+  // svgSel.value.call(zoomObj)
 
 
   
