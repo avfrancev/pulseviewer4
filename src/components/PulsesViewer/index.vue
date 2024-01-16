@@ -1,10 +1,10 @@
 <template lang="pug">
 .chart.relative
   .join.my-6
-    button.join-item.btn(@click="zoomObj.scaleTo(svgSel, 100, [0,0])") svgSel
-    button.join-item.btn(@click="svgSel.transition().duration(1200).ease(easeElasticOut).call(zoomObj.scaleBy, 1.2, [pos.x,0])") TEST
+    button.join-item.btn(@click="zoomObj.scaleTo(svgElWrapperSel, 100, [0,0])") svgElWrapperSel
+    button.join-item.btn(@click="svgElWrapperSel.transition().duration(1200).ease(easeElasticOut).call(zoomObj.scaleBy, 1.2, [pos.x,0])") TEST
     button.join-item.btn(
-      @click="svgSel.transition().duration(750).call(zoomObj.transform, zoomIdentity)"
+      @click="svgElWrapperSel.transition().duration(750).call(zoomObj.transform, zoomIdentity)"
       :class="{'btn-success': t.k === 1}"
       ) Reset
   //- .h-7
@@ -12,7 +12,7 @@
       .btn.btn-xs.btn-accent( :style="{transform: `translateX(-50%) rotate(${pos.angle + 90}deg)`,  transformOrigin: `50% 150%`}") 123
     //- :width="svgElBounds.width.value"
   div.w-full(ref="svgElWrapper" class="h-[200px]")
-    svg.pointer-events-none(
+    svg.pointer-events-none.select-none.touch-none(
       :viewBox="`${-t.x/t.k} -1 ${svgElBounds.width.value/t.k} ${201}`"
       ref="svgEl"
       preserveAspectRatio="none"
@@ -54,9 +54,11 @@
         g(v-if="dO.isDrawing")
           //- rect.fill-accent(:x="dO.sp[0]" y="0" :width="Math.abs(dO.mp[0] - dO.sp[0])" height="200")
           //- path.fill-accent(:d="` M ${dO.sp[0] + t.x} 0 V 200 H ${dO.mp[0] +t.x} V -200`")
-          path.fill-accent(:d="` M ${(dO.sp[0] - t.x)/t.k} 0 V 200 H ${(dO.mp[0] - t.x)/t.k} V -200`")
+          path.fill-accent(:d="` M ${dO.sp[0]} 0 V 200 H ${dO.mp[0]} V -200`")
 
-        measurementsComp.pointer-events-auto
+        //- measurementsComp
+        Measurements.pointer-events-auto
+        //- Measurements(v-bind="{ measurementsProps }")
         //- g(
           v-for="m in mm"
           )
@@ -116,13 +118,15 @@
 
         //- circle.fill-blue-400(:cx="xScaleOrigin.invert(1500) " cy="150" r=10 )
         //- path.fill-none.stroke-accent( stroke-width="2" :d="`M${pos.sx},0 ${pos.q1} ${pos.q2}`")
+    //- .lala.absolute(:style="{transform: `translateX(${t.applyX(measurements[0].x1)}px)`}")
+      .btn SDSDSDSD
 //- pre {{ props.data[pos.bb] }}
 //- pre {{ pos }}
 //- pre {{ props.data }}
 //- pre {{ sizes }}
 //- pre {{ measurements }}
 
-pre {{ mm }}
+//- pre {{ mm }}
 </template>
 
 <script setup>
@@ -132,10 +136,13 @@ import { easeElasticOut } from "d3-ease"
 import { line, curveStepBefore, curveStepAfter } from "d3-shape"
 import { select, pointer } from "d3-selection"
 import { zoom, ZoomTransform, zoomIdentity } from "d3-zoom"
-import { extent, sum, cumsum, bisect } from "d3-array"
+import { extent, sum, cumsum, bisect, quantile, mean } from "d3-array"
 import { scaleLinear, scaleOrdinal } from "d3-scale"
 import { brushX } from "d3-brush"
 import { computed, h, onMounted, reactive, watchEffect } from 'vue';
+
+
+import useMeasurements from './useMeasurements'
 
 const props = defineProps({
   data: Array,
@@ -192,91 +199,6 @@ watch(svgElBounds.width, () => {
   xScaleOrigin.value = xScale.value.copy()
 })
 
-const mm = reactive([
-  {x1: 300, x2: 400,},
-  {x1: 500, x2: 700,},
-])
-
-const measurementsComp = () => {
-  // return h('div', 'LALALA')
-  const rect = (m) => {
-    // const state = reactive({
-    //   isMoving: false,
-    // })
-    // m.isMoving = false
-    const handlePointerMove = (type, e) => {
-      // console.log("MMMM");
-      const [x,y] = t.invert(pointer(e, svgEl.value))
-      let dx = x - m.sp[0]
-      dx *= t.k
-      if (type == 'resize-x1') {
-        m.x1 = m.origin[0] + dx 
-        return
-      }
-      if (type == 'resize-x2') {
-        m.x2 = m.origin[1] + dx 
-        return
-      }
-      m.x1 = m.origin[0] + dx 
-      m.x2 = m.origin[1] + dx 
-      // m.x2 = m.origin[1] + x - m.sp[0]
-      // m.x1 /= t.k
-      // m.x2 /= t.k
-      // console.log(t.apply([x,y]));
-      // m.x2 -= m.sp[0] - x
-      // e.stopPropagation()
-      // console.log(e.target, e.currentTarget);
-      // console.log("MOVE");
-    }
-    const handlePointerUp = (e) => {
-      // console.log("UP");
-      document.removeEventListener("pointermove", handlePointerMoveFn)
-      document.removeEventListener("pointerup", handlePointerUp)
-    }
-    
-    const handlePointerDown = (type, e) => {
-      console.log("DOWN", type);
-      // console.log(e, type);
-      m.sp = t.invert(pointer(e, svgEl.value))
-      m.origin = [m.x1,m.x2]
-      handlePointerMoveFn = handlePointerMove.bind(null, type)
-      document.addEventListener("pointermove", handlePointerMoveFn)
-      document.addEventListener("pointerup", handlePointerUp)
-      // e.stopPropagation()
-    }
-    
-    let handlePointerMoveFn, handlePointerUpFn
-    
-    const p = [
-      h('path', {
-        d: `M ${m.x1} 0 V 200 H ${m.x2} V -200`,
-        class: 'fill-blue-300/20',
-        onPointerdown: handlePointerDown.bind(null, 'move')
-      }),
-      h('path', {
-        'stroke-width': "6",
-        class: 'stroke-red-600 hover:stroke-green-300 cursor-col-resize',
-        d: `M ${m.x1} 0 V 200`,
-        onPointerdown: handlePointerDown.bind(null, "resize-x1")
-      }),
-      h('path', {
-        'stroke-width': "6",
-        class: 'stroke-red-600 hover:stroke-red-300 cursor-col-resize',
-        d: `M ${m.x2} 0 V 200`,
-        onPointerdown: handlePointerDown.bind(null, "resize-x2")
-        // onPointerDown: handlePointerDown.bind(null, "resize")
-      }),
-    ]
-    // console.log(p);
-    // p.on('po')
-    return p
-  }
-
-  return h('g', {class: 'measurements'}, mm.map((m) => {
-    return rect(reactive(m))
-  }))
-}
-
 let dO = reactive({
   isDrawing: false,
   sp: [0,0],
@@ -284,39 +206,29 @@ let dO = reactive({
 })
 
 onMounted(() => {
-  // const b = brushX()
-  //   // .filter(function(event) {
-  //   //   return event.shiftKey
-  //   // })
-  //   .keyModifiers((e) => {
-  //     console.log(123123,e);
-  //     return ['shiftKey']
-  //   })
-  //   .extent([[0,0], [svgElBounds.width.value,svgElBounds.height.value]])
-  //   .on('brush', (e) => {
-  //     e.sourceEvent.stopPropagation()
-  //     console.log(e);
-  //   })
-  // svgSel.value.append("g")
-  //   .call(b)
 
 
-
-  svgSel.value.on('pointerdown', (e) => {
+  svgElWrapperSel.value.on('pointerdown', (e) => {
     if (e.shiftKey) {
       dO.isDrawing = true
-      dO.sp = pointer(e)
-      dO.mp = pointer(e)
+      dO.sp = t.invert(pointer(e))
+      dO.mp = t.invert(pointer(e))
     }
   })
-  svgSel.value.on('pointermove', (e) => {
+  svgElWrapperSel.value.on('pointermove', (e) => {
     if (dO.isDrawing) {
-      console.log(dO);
-      dO.mp = pointer(e, svgEl.value)
+      // console.log(dO);
+      dO.mp = t.invert(pointer(e))
     }
   })
-  svgSel.value.on('pointerup', (e) => {
+  svgElWrapperSel.value.on('pointerup', (e) => {
     // console.log("MOVE", e);
+    if (dO.isDrawing) {
+      let x1 = dO.mp[0]
+      let x2 = dO.sp[0]
+      const m = createMeasurement(x1,x2)
+      measurements.push(m)
+    }
     dO.isDrawing = false
   })
   
@@ -327,7 +239,7 @@ onMounted(() => {
       // console.log('start');
     // })
     .filter(function(event) {
-      console.log(event);
+      // console.log(event);
       if (event.target !== event.currentTarget && event.type !== 'wheel') return false
       return !event.shiftKey
     })
@@ -361,42 +273,16 @@ const pos = reactive({
 })
 
 
-// let a
+const { Measurements, measurements, createMeasurement } = useMeasurements({
+  data: props.data,
+  cumsumData,
+  t, sizes,
+  xScaleOrigin,
+  svgEl,
+})
 
-// useGesture({
-//   onMove: (s) => {
-//     let x = s.initial[0] + s.movement[0] - svgElBounds.left.value
-//     pos.x = x
-//     pos.y = s.initial[1] + s.movement[1] - svgElBounds.top.value
-//     // console.log(a);
-//     pos.bb = bisect(cumsumData.value, xScale.value.invert(x))
-//     // console.log(bb);
-    
-//     if (a)
-//       a.stop()
-//     a = pm.animate({
-//       // from: s.initial[0] - svgElBounds.left.value,
-//       from: pos.sx ? pos.sx : s.initial[0] - svgElBounds.left.value,
-//       to: x,
-//       stiffness: 1500,
-//       damping: 20,
-//       mass: 0.5,
-//       type: "spring",
-//       onUpdate: (v) => {
-//         // console.log(v);
-//         let dx = Math.abs(pos.x - v)
-//         pos.dx = dx
-//         pos.sx = v
-//         pos.q1 = `Q ${pos.x} ${pos.y - 50} ${pos.x} ${pos.y}`
-//         pos.q2 = `Q ${pos.x} ${pos.y + 50} ${pos.sx} ${sizes.chart.height}`
-//         pos.angle = Math.atan2( 0 - pos.y, pos.sx - pos.x) * 180 / Math.PI
-//       }
-//     })
-//   }
+measurements.push(createMeasurement(100,200,'green'))
 
-// },{
-//   domTarget: svgEl
-// })
 
 
 </script>
