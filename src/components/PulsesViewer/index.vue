@@ -5,128 +5,185 @@
     button.join-item.btn(@click="svgElWrapperSel.transition().duration(1200).ease(easeElasticOut).call(zoomObj.scaleBy, 1.2, [pos.x,0])") TEST
     button.join-item.btn(
       @click="svgElWrapperSel.transition().duration(750).call(zoomObj.transform, zoomIdentity)"
-      :class="{'btn-success': t.k === 1}"
-      ) Reset
+      :class="{'btn-disabled': t.k === 1}"
+      )
+      i-fluent:scale-fit-16-regular.h-8.w-8
   //- .h-7
     .absolute(:style="{transform: `translateX(${pos.sx}px)`}")
       .btn.btn-xs.btn-accent( :style="{transform: `translateX(-50%) rotate(${pos.angle + 90}deg)`,  transformOrigin: `50% 150%`}") 123
     //- :width="svgElBounds.width.value"
-  div.w-full(ref="svgElWrapper" class="h-[200px]")
-    svg.pointer-events-none.select-none.touch-none(
-      :viewBox="`${-t.x/t.k} -1 ${svgElBounds.width.value/t.k} ${201}`"
-      ref="svgEl"
-      preserveAspectRatio="none"
-      style="backface-visibility: hidden; transform-style: flat;"
-      :height="`${svgElBounds.height.value}px`"
-      :width="`${svgElBounds.width.value}px`"
-      )
-      //- :viewBox="`0 0 ${svgElBounds.width.value} ${svgElBounds.height.value}`"
-      defs
-        marker( 
-          markerUnits="userSpaceOnUse"
-          id='head' 
-          :viewBox="`0 0 10 10`"
-          :refX="10/t.k"
-          :refY="5"
-          :markerWidth="6"
-          :markerHeight="6"
-          orient="auto-start-reverse")
-          path.fill-base-content(
-            :transform="`scale(${1/t.k},${1})`"
-            :d='`M 0 0 L 10 5 L 0 10 z`')
-      //- svg(
+  svg.pointer-events-none.hidden
+    defs
+      pattern(id="pattern_stripe_lines2",
+          preserveAspectRatio="none"
+          patternUnits="userSpaceOnUse"
+          :width="4/1"
+          :height="4"
+        )
+        //- :patternTransform="`scale(${1/1},1)`"
+        //- line(x1="0", y="0", x2="12.5", :y2="12.5" shape-rendering="geometricPrecision" )
+        <g fill="white">
+          <polygon :points="`0 ${4/1} ${4/1} 0 2 0 0 2`" />
+          <polygon :points="`${4/1} ${4/1} ${4/1} 2 2 ${4/1}`" />
+        </g>          
+      mask#stripe-mask2(x="0", y="0", width="13", height="13")
+        rect(x="0", y="0", :width="svgElBounds.width.value", height="1000", fill="url(#pattern_stripe_lines2)")
+  div.flex
+    .flex.flex-col.mr-2.join.join-vertical
+      button.join-item.btn.btn-sma.btn-square(@click="isMeasurementsOpened = !isMeasurementsOpened")
+        i-tabler:ruler-measure.h-6.w-6
+      button.join-item.btn.btn-sma.btn-square(
+        @click="svgElWrapperSel.transition().duration(750).call(zoomObj.transform, zoomIdentity)"
+        :class="{'btn-disabled': t.k === 1}"
+        )
+        i-fluent:scale-fit-16-regular.h-6.w-6
+
+    div.w-full(ref="svgElWrapper" class="h-[200px]")
+      svg.pointer-events-none.select-none.touch-none(
         :viewBox="`${-t.x/t.k} -1 ${svgElBounds.width.value/t.k} ${201}`"
+        ref="svgEl"
         preserveAspectRatio="none"
         style="backface-visibility: hidden; transform-style: flat;"
         :height="`${svgElBounds.height.value}px`"
-        :width="`${svgElBounds.width.value}px`"        
+        :width="`${svgElBounds.width.value}px`"
         )
-      g
-        //- g
-          path.fill-none.stroke-secondary( stroke-width="2" :d="l(arr)")
-        //- g(style="backface-visibility: hidden; transform-style: flat;" ref="svgGroupEl" :transform="`scale(${t.k},1) translate(${t.x/t.k},0)`")
-          //- g(style="backface-visibility: hidden; transform-style: flat;" ref="svgGroupEl"
-            :style="{transform: `translate(${t.x/t.k}px,0px) scaleX(${t.k})`}"
+        //- :viewBox="`0 0 ${svgElBounds.width.value} ${svgElBounds.height.value}`"
+        defs
+          //- patternUnits="objectBoundingBox",
+          pattern(id="pattern_stripe_lines",
+              preserveAspectRatio="none"
+              patternUnits="userSpaceOnUse"
+              :width="4/t.k"
+              :height="4"
             )
-        //- svg(:viewBox="`${-t.x/t.k} 0 ${svgElBounds.width.value/t.k} ${200}`"
+            //- :patternTransform="`scale(${1/t.k},1)`"
+            //- line(x1="0", y="0", x2="12.5", :y2="12.5" shape-rendering="geometricPrecision" )
+            <g fill="white">
+              <polygon :points="`0 ${4/t.k} ${4/t.k} 0 2 0 0 2`" />
+              <polygon :points="`${4/t.k} ${4/t.k} ${4/t.k} 2 2 ${4/t.k}`" />
+            </g>          
+          mask#stripe-mask(x="0", y="0", width="13", height="13")
+            rect(x="0", y="0", :width="svgElBounds.width.value", height="1000", fill="url(#pattern_stripe_lines)")
+          marker( 
+            markerUnits="userSpaceOnUse"
+            id='head' 
+            :viewBox="`0 0 10 10`"
+            :refX="10/t.k"
+            :refY="5"
+            :markerWidth="6"
+            :markerHeight="6"
+            orient="auto-start-reverse")
+            path.fill-base-content(
+              :transform="`scale(${1/t.k},${1})`"
+              :d='`M 0 0 L 10 5 L 0 10 z`')
+        //- svg(
+          :viewBox="`${-t.x/t.k} -1 ${svgElBounds.width.value/t.k} ${201}`"
           preserveAspectRatio="none"
+          style="backface-visibility: hidden; transform-style: flat;"
+          :height="`${svgElBounds.height.value}px`"
+          :width="`${svgElBounds.width.value}px`"        
           )
-        g(v-if="dO.isDrawing")
-          //- rect.fill-accent(:x="dO.sp[0]" y="0" :width="Math.abs(dO.mp[0] - dO.sp[0])" height="200")
-          //- path.fill-accent(:d="` M ${dO.sp[0] + t.x} 0 V 200 H ${dO.mp[0] +t.x} V -200`")
-          path.fill-accent(:d="` M ${dO.sp[0]} 0 V 200 H ${dO.mp[0]} V -200`")
-
-        //- measurementsComp
-        Measurements.pointer-events-auto
-        //- Measurements(v-bind="{ measurementsProps }")
-        //- g(
-          v-for="m in mm"
-          )
-          path.fill-accent(
-            :d="` M ${m.x1} 0 V 200 H ${m.x2} V -200`")
-
-        g.ticks(
-            v-if="xScale.ticks"
-          )
-          g(
-            v-for="tick in xScale.ticks(4)"
+        g(transform="translate(0,0)")
+          //- g
+            path.fill-none.stroke-secondary( stroke-width="2" :d="l(arr)")
+          //- g(style="backface-visibility: hidden; transform-style: flat;" ref="svgGroupEl" :transform="`scale(${t.k},1) translate(${t.x/t.k},0)`")
+            //- g(style="backface-visibility: hidden; transform-style: flat;" ref="svgGroupEl"
+              :style="{transform: `translate(${t.x/t.k}px,0px) scaleX(${t.k})`}"
+              )
+          //- svg(:viewBox="`${-t.x/t.k} 0 ${svgElBounds.width.value/t.k} ${200}`"
+            preserveAspectRatio="none"
             )
-            path.stroke-base-content(
-              :d="`M ${xScaleOrigin(tick)} 15 V20`")
-            text.fill-base-content.text-xs(
-              :x="xScaleOrigin(tick)"
-              :transform-origin="`${xScaleOrigin(tick)} 0`"
-              dy="0"
-              :transform="`scale(${1/t.k},1)`"
-              dominant-baseline="hanging"
-              text-anchor="middle"
-              ) {{ tick/1000 }}
-        //- g.chart(:transform="`translate(0,${sizes.chart.y})`")
-        g.chart
-          path.fill-none.stroke-secondary(stroke-width="2" :d="genLine(cumsumData)" dy="123")
-        g.arrows(
-          v-if="xScaleOrigin((props.data[pos.bb]) * t.k) > 15"
-          )
-          path.fill-none.stroke-base-content(
-            marker-start='url(#head)'
-            marker-end='url(#head)'
-            :transform="`translate(0,${sizes.chart.y - 8})`"
-            stroke-width="1" :d="`M${xScaleOrigin(cumsumData[pos.bb-1])} 0 L${xScaleOrigin(cumsumData[pos.bb])} 0`")
-          path.fill-none.stroke-base-content(
-            marker-start='url(#head)'
-            marker-end='url(#head)'
-            :transform="`translate(0,${sizes.bottom.y + 8})`"
-            stroke-width="1" :d="`M${xScaleOrigin(cumsumData[pos.bb-1])} 0 L${xScaleOrigin(cumsumData[pos.bb+1])} 0`")
-          g(:transform="`scale(${1/t.k},1)`")
-            text.text-xs.font-bold.fill-base-content(
-              dy="0"
-              dominant-baseline="hanging"
-              :dx="xScaleOrigin(props.data[pos.bb] / 2 * t.k)"
-              :x="xScaleOrigin(cumsumData[pos.bb-1]) * t.k"
-              text-anchor="middle"
-              ) {{ props.data[pos.bb] }} 
-            text.text-xs.font-bold.fill-base-content(
-              dy="16"
-              :transform="`translate(0,${sizes.bottom.y})`"
-              dominant-baseline="hanging"
-              :x="xScaleOrigin(cumsumData[pos.bb - 1]) * t.k"
-              :dx="xScaleOrigin((props.data[pos.bb] + props.data[pos.bb+1]) / 2 * t.k)"
-              text-anchor="middle"
-              ) {{ props.data[pos.bb] + props.data[pos.bb+1] }} 
-              //- ) {{ props.data[pos.bb+1] }} 
-            //- circle.fill-success(:cx="(xScaleOrigin(cumsumData[pos.bb]*t.k))" cy="2" r=3  )
+          g(v-if="dO.isDrawing")
+            //- rect.fill-accent(:x="dO.sp[0]" y="0" :width="Math.abs(dO.mp[0] - dO.sp[0])" height="200")
+            //- path.fill-accent(:d="` M ${dO.sp[0] + t.x} 0 V 200 H ${dO.mp[0] +t.x} V -200`")
+            path.fill-accent(:d="` M ${dO.sp[0]} 0 V 200 H ${dO.mp[0]} V -200`")
 
-        //- circle.fill-blue-400(:cx="xScaleOrigin.invert(1500) " cy="150" r=10 )
-        //- path.fill-none.stroke-accent( stroke-width="2" :d="`M${pos.sx},0 ${pos.q1} ${pos.q2}`")
-    //- .lala.absolute(:style="{transform: `translateX(${t.applyX(measurements[0].x1)}px)`}")
-      .btn SDSDSDSD
+          //- measurementsComp
+          Measurements.pointer-events-auto
+          //- Measurements(v-bind="{ measurementsProps }")
+          //- g(
+            v-for="m in mm"
+            )
+            path.fill-accent(
+              :d="` M ${m.x1} 0 V 200 H ${m.x2} V -200`")
+
+          g.ticks(
+              v-if="xScale.ticks"
+            )
+            g(
+              v-for="tick in xScale.ticks(4)"
+              )
+              path(
+                class="stroke-base-content/30"
+                stroke-dasharray="7 10"
+                stroke-width="1"
+                :d="`M ${xScaleOrigin(tick)} 20 V200`")
+              text.fill-base-content.text-xs(
+                :x="xScaleOrigin(tick)"
+                :transform-origin="`${xScaleOrigin(tick)} 0`"
+                dy="0"
+                :transform="`scale(${1/t.k},1)`"
+                dominant-baseline="hanging"
+                text-anchor="middle"
+                ) {{ tick/1000 }}
+          //- g.chart(:transform="`translate(0,${sizes.chart.y})`")
+          g.chart
+            path.fill-none.stroke-secondary(stroke-width="2" :d="genLine(cumsumData)" dy="123")
+          g.arrows(
+            v-if="xScaleOrigin((props.data[pos.bb]) * t.k) > 15"
+            )
+            path.fill-none.stroke-base-content(
+              marker-start='url(#head)'
+              marker-end='url(#head)'
+              :transform="`translate(0,${sizes.chart.y - 8})`"
+              stroke-width="1" :d="`M${xScaleOrigin(cumsumData[pos.bb-1])} 0 L${xScaleOrigin(cumsumData[pos.bb])} 0`")
+            path.fill-none.stroke-base-content(
+              v-if="props.data[pos.bb+1]"
+              marker-start='url(#head)'
+              marker-end='url(#head)'
+              :transform="`translate(0,${sizes.bottom.y + 8})`"
+              stroke-width="1" :d="`M${xScaleOrigin(cumsumData[pos.bb-1])} 0 L${xScaleOrigin(cumsumData[pos.bb+1])} 0`")
+            g(:transform="`scale(${1/t.k},1)`")
+              text.text-xs.font-bold.fill-base-content(
+                dy="0"
+                dominant-baseline="hanging"
+                :dx="xScaleOrigin(props.data[pos.bb] / 2 * t.k)"
+                :x="xScaleOrigin(cumsumData[pos.bb-1]) * t.k"
+                text-anchor="middle"
+                ) {{ props.data[pos.bb] }} 
+              text.text-xs.font-bold.fill-base-content(
+                v-if="props.data[pos.bb+1]"
+                dy="16"
+                :transform="`translate(0,${sizes.bottom.y})`"
+                dominant-baseline="hanging"
+                :x="xScaleOrigin(cumsumData[pos.bb - 1]) * t.k"
+                :dx="xScaleOrigin((props.data[pos.bb] + props.data[pos.bb+1]) / 2 * t.k)"
+                text-anchor="middle"
+                ) {{ props.data[pos.bb] + props.data[pos.bb+1] }} 
+                //- ) {{ props.data[pos.bb+1] }} 
+              //- circle.fill-success(:cx="(xScaleOrigin(cumsumData[pos.bb]*t.k))" cy="2" r=3  )
+
+          //- circle.fill-blue-400(:cx="xScaleOrigin.invert(1500) " cy="150" r=10 )
+          //- path.fill-none.stroke-accent( stroke-width="2" :d="`M${pos.sx},0 ${pos.q1} ${pos.q2}`")
+    //- .lala.absolute.bottom-0(
+      v-for="m in measurements"
+      :style="{transform: `translateX(${t.applyX(m.selection.maxX )}px)`}")
+      div(
+        class="-translate-x-full pr-2"
+        )
+        .btn.btn-xs(
+          @click="m.selected = !m.selected") {{ m.selected }}
+input.range.w-48(type="range" v-model.number="xOffset" min="-1000" max="1000")
+pre {{ xOffset }}
+input(v-model.number="xOffset" type="number")
+div.grid.mt-4(:style="['transition: grid-template-rows 0.2s ease-out', {'grid-template-rows': isMeasurementsOpened ? '1fr':'0fr'}]")
+  MeasurementsMeta.overflow-hidden(v-bind="{ measurements, measurementsSorted, createMeasurement }")
+  //- .lala.absolute(:style="{transform: `translateX(${t.applyX(measurements[0].x1)}px)`}")
 //- pre {{ props.data[pos.bb] }}
 //- pre {{ pos }}
 //- pre {{ props.data }}
 //- pre {{ sizes }}
-//- pre {{ measurements }}
-
-//- pre {{ mm }}
+//- pre {{ measurements[0].selected }}
 </template>
 
 <script setup>
@@ -138,22 +195,37 @@ import { select, pointer } from "d3-selection"
 import { zoom, ZoomTransform, zoomIdentity } from "d3-zoom"
 import { extent, sum, cumsum, bisect, quantile, mean } from "d3-array"
 import { scaleLinear, scaleOrdinal } from "d3-scale"
-import { brushX } from "d3-brush"
+// import { brushX } from "d3-brush"
 import { computed, h, onMounted, reactive, watchEffect } from 'vue';
 
 
 import useMeasurements from './useMeasurements'
 
 const props = defineProps({
-  data: Array,
+  data: {
+    type: Array,
+    default: [],
+  },
+  xOffset: {
+    type: Number,
+    default: 1
+  }
 })
+
+const emit = defineEmits(['update:xOffset'])
+// const xOffset = useVModel(props, 'xOffset', emit)
+const xOffset = ref(1)
 
 const svgEl = ref()
 const svgElWrapper = ref()
 const svgElBounds = useElementBounding(svgElWrapper)
 
 // let arr = props.data
-props.data.unshift(0)
+// props.data.unshift(0)
+// watchEffect(() => {
+//   console.log(props.data)
+// })
+const isMeasurementsOpened = ref(true)
 
 /////////////////////////
 let sizes = reactive({
@@ -169,6 +241,9 @@ const minmaxData = computed(() => extent(props.data.filter(Boolean)))
 const sumData = computed(() => sum(props.data))
 const cumsumData = computed(() => cumsum(props.data))
 
+// watchEffect(() => {
+//   console.log(sumData.value);
+// })
 
 const genLine = computed(() => 
   line()
@@ -192,10 +267,11 @@ const svgElWrapperSel = computed(() => {
   return select(svgElWrapper.value)
 })
 
-let zoomObj
+let zoomObj = ref()
 
-watch(svgElBounds.width, () => {
-  xScale.value = scaleLinear([0, sumData.value], [0,svgElBounds.width.value])
+watch([svgElBounds.width, sumData, xOffset], () => {
+  // console.log(xOffset.value);
+  xScale.value = scaleLinear([0, sumData.value], [1 ,svgElBounds.width.value-1])
   xScaleOrigin.value = xScale.value.copy()
 })
 
@@ -215,7 +291,15 @@ onMounted(() => {
       dO.mp = t.invert(pointer(e))
     }
   })
+  // svgElWrapperSel.value.on('pointerenter', (e) => {
+  //   const measurementId = e.target.getAttribute('measurementId')
+  //   console.log(measurementId);
+  //   if (measurementId >= 0 && measurementId != null) {
+  //     measurements[measurementId].hovered = true
+  //   }
+  // })
   svgElWrapperSel.value.on('pointermove', (e) => {
+
     if (dO.isDrawing) {
       // console.log(dO);
       dO.mp = t.invert(pointer(e))
@@ -226,21 +310,22 @@ onMounted(() => {
     if (dO.isDrawing) {
       let x1 = dO.mp[0]
       let x2 = dO.sp[0]
+      if (x2 - x1 == 0) return
       const m = createMeasurement(x1,x2)
       measurements.push(m)
     }
     dO.isDrawing = false
   })
   
-  zoomObj = zoom()
+  zoomObj.value = zoom()
     .scaleExtent([1, sizes.chart.height])
     .translateExtent([[0,0],[svgElBounds.width.value,svgElBounds.height.value]])
     // .on('mousemove', e => {
       // console.log('start');
     // })
     .filter(function(event) {
-      // console.log(event);
-      if (event.target !== event.currentTarget && event.type !== 'wheel') return false
+      const isMeasurement = event.target.getAttribute('isMeasurement')
+      if (event.target !== event.currentTarget && event.type !== 'wheel' && !isMeasurement) return false
       return !event.shiftKey
     })
     .on('zoom', e => {
@@ -252,7 +337,9 @@ onMounted(() => {
       // pos.ss = e.transform
       Object.assign(t, e.transform)
     });
-  svgElWrapperSel.value.call(zoomObj);
+    
+  zoomObj.value(svgElWrapperSel.value)
+  // svgElWrapperSel.value.call(zoomObj.value);
   // svgSel.value.call(zoomObj)
 
 
@@ -273,15 +360,19 @@ const pos = reactive({
 })
 
 
-const { Measurements, measurements, createMeasurement } = useMeasurements({
-  data: props.data,
+const { Measurements, measurements, measurementsSorted, createMeasurement } = useMeasurements({
+  data: computed(() => props.data),
   cumsumData,
   t, sizes,
   xScaleOrigin,
   svgEl,
+  svgElWrapperSel,
+  zoomObj,
+  svgElBounds,
 })
 
-measurements.push(createMeasurement(100,200,'green'))
+measurements.push(createMeasurement(0,200,'green'))
+
 
 
 

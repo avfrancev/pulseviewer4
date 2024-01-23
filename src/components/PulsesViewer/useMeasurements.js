@@ -1,7 +1,8 @@
 import { select, pointer } from "d3-selection"
 import { zoom, ZoomTransform, zoomIdentity } from "d3-zoom"
 import { extent, sum, cumsum, bisect, quantile, mean } from "d3-array"
-
+import { interpolateRainbow } from 'd3-scale-chromatic'
+import { clamp } from 'lodash-es'
 
 export default  (props) => {
 
@@ -11,32 +12,52 @@ export default  (props) => {
     t, sizes,
     xScaleOrigin,
     svgEl,
+    svgElWrapperSel,
+    zoomObj,
+    svgElBounds,
   } = props
 
   const measurements = reactive([])
-  
+  const measurementsSorted = computed((e) => measurements.sort((a,b) => a.selection.minX - b.selection.minX))
+
   const Measurements = () => {
     // return h('div', 'LALALA')
     const rect = (m) => {
       // const state = reactive({
       //   isMoving: false,
       // })
-      // m.isMoving = false
+      let handlePointerMoveFn, handlePointerUpFn
+
       const handlePointerMove = (type, e) => {
         const [x,y] = t.invert(pointer(e, svgEl.value))
         let dx = x - m.sp[0]
         dx *= t.k
+        let x1 = clamp(m.origin[0] + dx,0,svgElBounds.width.value)
+        let x2 = clamp(m.origin[1] + dx,0,svgElBounds.width.value)
         if (type == 'resize-x1') {
-          m.x1 = m.origin[0] + dx 
+          m.x1 = x1 
           return
         }
         if (type == 'resize-x2') {
-          m.x2 = m.origin[1] + dx 
+          m.x2 = x2 
           return
         }
-        m.x1 = m.origin[0] + dx 
-        m.x2 = m.origin[1] + dx 
+        let w = Math.abs(m.x1 - m.x2)
+        if (x1 === 0 || x1 === svgElBounds.width.value) {
+          m.x1 = x1
+          m.x2 = m.x1 + ( x1 === 0 ? w : -w )
+          return
+        }
+        if (x2 === 0 || x2 === svgElBounds.width.value) {
+          m.x2 = x2
+          m.x1 = m.x2 + ( x2 === 0 ? w : -w )
+          return
+        }
+        m.x1 = x1 
+        m.x2 = x2 
       }
+
+
       const handlePointerUp = (e) => {
         document.removeEventListener("pointermove", handlePointerMoveFn)
         document.removeEventListener("pointerup", handlePointerUp)
@@ -49,18 +70,25 @@ export default  (props) => {
         document.addEventListener("pointermove", handlePointerMoveFn)
         document.addEventListener("pointerup", handlePointerUp)
       }
+
       
-      let handlePointerMoveFn, handlePointerUpFn
-      
-      const p = [
+      const p = h('g', {
+        onPointerenter: (e) => m.hovered = true,
+        onPointerleave: (e) => m.hovered = false,
+        measurementId: m.selection.measurementId,
+        },
         h('path', {
-          d: `M ${m.x1} 0 V 200 H ${m.x2} V -200`,
-          class: 'pointer-events-none',
+          d: `M ${m.x1} 0 V 200 H ${m.x2} V 0`,
+          // class: 'pointer-events-none',
+          isMeasurement: 'true',
+          measurementId: m.selection.measurementId,
+          mask: "url(#stripe-mask2)",
+          fill: m.color,
           style: {
-            opacity: 0.1,
-            fill: m.color,
+            opacity: 0.5,
+            // fill: m.color,
+            // fill: "url(#pattern_stripe_lines)",
           },
-          // onPointerdown: handlePointerDown.bind(null, 'move')
         }),
   
         h('g',
@@ -89,7 +117,8 @@ export default  (props) => {
                 opacity: 0,
                 stroke: m.color,
               },
-              onPointerdown: handlePointerDown.bind(null, 'move')
+              onPointerdown: handlePointerDown.bind(null, 'move'),
+              // onclick: () => m.selected = !m.selected
             }),
           ]
         ),      
@@ -122,7 +151,7 @@ export default  (props) => {
             'stroke-width': "12",
             class: 'stroke-transparent cursor-col-resize',
             d: `M ${m.x2} 0 V 200`,
-            onPointerdown: handlePointerDown.bind(null, "resize-x2")
+            onPointerdown: handlePointerDown.bind(null, "resize-x2"),
           })]
         ),
         // h('path', {
@@ -132,7 +161,7 @@ export default  (props) => {
         //   onPointerdown: handlePointerDown.bind(null, "resize-x2")
         //   // onPointerDown: handlePointerDown.bind(null, "resize")
         // }),
-      ]
+      )
       return p
     }
     return h('g', {class: 'measurements'}, measurements.map((m) => {
@@ -140,26 +169,67 @@ export default  (props) => {
     }))
   }
 
+  const colors = Array.from(Array(10)).map((d,i) => {
+    return interpolateRainbow(i/10)
+  })
+
+
+  // console.log(colors);
+
+  // function getColor() {
+  //   let cf = colors.filter((d) => {
+  //     measurements.
+  //   })
+  //   // let color = interpolateRainbow((measurements.length + i) / 8)
+  //   // if (measurements.some((m) => m.color === color))
+  //   //   return getColor(i+1)
+  //   return color % 10
+  // }
+
+  let createMeasurementCounter = 0
+
   function createMeasurement(x1=0,x2=100,color='red') {
     const state = reactive({
       x1,x2,color,
       width: computed(() => Math.abs(state.x1 - state.x2)),
+      selected: false,
+      // color: getColor(),
+      // color: interpolateRainbow(measurements.length / 8),
+      color: colors[(createMeasurementCounter++) % 10],
+      // maxX: computed(() => Math.max(state.x1,state.x2)),
+      locateMeasurement: () => {
+        let s = svgElBounds.width.value / state.width * 0.9
+        let z = zoomIdentity.scale(s)
+        z = z.translate(-(state.selection.minX - ( state.width * 0.05)),0)
+        svgElWrapperSel.value.transition().duration(2000).call(zoomObj.value.transform, z)
+      },
+      remove: () => {
+        measurements.splice(measurements.indexOf(state),1)
+      },
       selection: computed(() => {
         // let b = bisect(cumsumData.value, o.x1)
-        const x1 = xScaleOrigin.value.invert(state.x1)
-        const x2 = xScaleOrigin.value.invert(state.x2)
-        const minX = Math.min(x1,x2)
-        const maxX = Math.max(x1,x2)
+        const scaledX1 = xScaleOrigin.value.invert(state.x1)
+        const scaledX2 = xScaleOrigin.value.invert(state.x2)
+        const scaledMinX = Math.min(scaledX1,scaledX2)
+        const scaledMaxX = Math.max(scaledX1,scaledX2)
+        const minX = Math.min(state.x1,state.x2)
+        const maxX = Math.max(state.x1,state.x2)
+
+                
+        // const minX = Math.min(state.x1,state.x2)
+        // const maxX = Math.max(state.x1,state.x2)
         const dT = xScaleOrigin.value.invert(state.width)
-        let rangeIds = [bisect(cumsumData.value, x1), bisect(cumsumData.value, x2)].sort((a,b) => a-b)
+        let rangeIds = [bisect(cumsumData.value, scaledMinX), bisect(cumsumData.value, scaledMaxX)].sort((a,b) => a-b)
         const cumsumPulses = cumsumData.value.slice(rangeIds[0], rangeIds[1])
-        const pulses = props.data.slice(rangeIds[0], rangeIds[1])
+        const pulses = props.data.value.slice(rangeIds[0], rangeIds[1])
         const minmaxFreq = extent(pulses)
         // quantile @pulses.value.map((d)->d.w), 0.05
-        const q = quantile(props.data, 0.05)
+        const q = quantile(pulses, 0.05)
         const baud = parseInt(1 / q*1000*1000)
+        const measurementId = measurements.indexOf(state)
         return {
-          x1,x2,dT,
+          measurementId,
+          scaledX1,scaledX2,dT,
           minX, maxX,
           rangeIds,
           pulses,
@@ -175,7 +245,24 @@ export default  (props) => {
   return {
     Measurements,
     measurements,
+    measurementsSorted,
     createMeasurement,
   }
 }
+
+
+// ΔT	0.9024258921333334	s
+// Nfalling	278	
+// Nrising	279	
+// fmin	160.86998487821955	Hz
+// fmax	5871.9906048146295	Hz
+// fmean	309.09818270282125	Hz
+// Tstd	0.0013018705305734958	s
+// fbaud	17857.142857131003	Hz
+// Pmin	0.00035439999999994145	s
+// Pmean	0.0032407480144404327	s
+// PSDev	0.0013422704540369177	s
+// Pmax	0.006492899999999963	s
+// Count	277	
+
 

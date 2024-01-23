@@ -16,9 +16,11 @@
     "d3-brush": "^3.0.0",
     "d3-ease": "^3.0.1",
     "d3-scale": "^4.0.2",
+    "d3-scale-chromatic": "^3.0.0",
     "d3-selection": "^3.0.0",
     "d3-shape": "^3.2.0",
     "d3-zoom": "^3.0.0",
+    "lodash-es": "^4.17.21",
     "popmotion": "^11.0.5",
     "pug": "^3.0.2",
     "sass": "^1.69.7",
@@ -26,6 +28,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.171",
     "@vitejs/plugin-vue": "^4.5.2",
     "@vue/language-plugin-pug": "^1.8.27",
     "autoprefixer": "^10.4.16",
@@ -33,6 +36,7 @@
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "unplugin-auto-import": "^0.17.3",
+    "unplugin-icons": "^0.18.2",
     "unplugin-vue-components": "^0.26.0",
     "vite": "^5.0.8",
     "vite-plugin-pages": "^0.32.0"

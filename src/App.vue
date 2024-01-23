@@ -1,10 +1,11 @@
 <template lang="pug">
-div.flex.items-center.justify-center
+//- div.flex.items-center.justify-center
   .join
     .join-item.btn.btn-outline.btn-accent.btn-active(ref="hello") Button
     .join-item.btn.btn-outline.btn-accent(ref="hello") Button 2
   //- pre {{ mouse }}
-router-view
+.overflow-hidden
+  router-view
 </template>
 
 <script setup>
