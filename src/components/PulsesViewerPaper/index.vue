@@ -127,6 +127,7 @@ onMounted(() => {
     
   wrapperSel.value.call(zoomObj.value).on('wheel', e => {
     zoomObj.value.translateBy(wrapperSel.value, e.deltaX / tz.k, 0)
+    e.preventDefault()
   });
 
   wrapperSel.value.on('mousemove click', (e) => {
