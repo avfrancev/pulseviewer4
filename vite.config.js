@@ -13,6 +13,8 @@ export default defineConfig({
   plugins: [
     vue(),
     Components({
+      extensions: ['vue', 'md', 'js'],
+      include: [/\.vue$/, /\.vue\?vue/, /\.js$/],
       resolvers: [
         IconsResolver({
           customCollections: ['custom', 'inline'],

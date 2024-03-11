@@ -18,6 +18,6 @@ const hello = ref()
 
 
 <style scoped lang="sass">
-.lala
-  background: green
+html
+  scroll-behavior: smooth
 </style>

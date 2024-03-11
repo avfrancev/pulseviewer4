@@ -1,0 +1,2030 @@
+[
+    {
+        "store": "Верный",
+        "address": "Борисовский проезд, 14 стр.2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.722298,
+                    55.625105
+                ]
+            },
+            "properties": {
+                "name": "Борисовский проезд, 14к2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.718193,
+                        55.622782
+                    ],
+                    [
+                        37.726403,
+                        55.627427
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0NTAzNRJG0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCR0L7RgNC40YHQvtCy0YHQutC40Lkg0L_RgNC-0LXQt9C0LCAxNNC6MiIKDaHjFkIVG4BeQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Борисовский проезд, 14к2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 0,
+        "day": 0,
+        "x": 37.722298,
+        "y": 55.625105
+    },
+    {
+        "store": "Дикси",
+        "address": "115551, Москва, Шипиловский проезд, 39,к3",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.69675,
+                    55.612619
+                ]
+            },
+            "properties": {
+                "name": "Шипиловский проезд, 39к3",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.692645,
+                        55.610295
+                    ],
+                    [
+                        37.700855,
+                        55.614943
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzOTI3MxJG0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCo0LjQv9C40LvQvtCy0YHQutC40Lkg0L_RgNC-0LXQt9C0LCAzOdC6MyIKDXnJFkIVU3NeQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Шипиловский проезд, 39к3",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 1,
+        "day": 1,
+        "x": 37.69675,
+        "y": 55.612619
+    },
+    {
+        "store": "Дикси",
+        "address": "Генерала Белова ул, 43 стр.2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.725173,
+                    55.607961
+                ]
+            },
+            "properties": {
+                "name": "улица Генерала Белова, 43с2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.721067,
+                        55.605638
+                    ],
+                    [
+                        37.729278,
+                        55.610285
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNzQwMhJL0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JPQtdC90LXRgNCw0LvQsCDQkdC10LvQvtCy0LAsIDQz0YEyIgoNlOYWQhWNbl5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Генерала Белова, 43с2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 2,
+        "x": 37.725173,
+        "y": 55.607961
+    },
+    {
+        "store": "Дикси",
+        "address": "Генерала Белова ул, 5",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.716657,
+                    55.623625
+                ]
+            },
+            "properties": {
+                "name": "улица Генерала Белова, 5",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.712551,
+                        55.621302
+                    ],
+                    [
+                        37.720762,
+                        55.625948
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0NDQ0MRJH0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JPQtdC90LXRgNCw0LvQsCDQkdC10LvQvtCy0LAsIDUiCg3b3RZCFZh-XkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Генерала Белова, 5",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 3,
+        "day": 3,
+        "x": 37.716657,
+        "y": 55.623625
+    },
+    {
+        "store": "Дикси",
+        "address": "Каширское ш, 142 стр.1",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.722343,
+                    55.597327
+                ]
+            },
+            "properties": {
+                "name": "Каширское шоссе, 142к1",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.718238,
+                        55.595003
+                    ],
+                    [
+                        37.726448,
+                        55.599652
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNDYyORJB0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCa0LDRiNC40YDRgdC60L7QtSDRiNC-0YHRgdC1LCAxNDLQujEiCg2v4xZCFapjXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Каширское шоссе, 142к1",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 4,
+        "day": 4,
+        "x": 37.722343,
+        "y": 55.597327
+    },
+    {
+        "store": "Дикси",
+        "address": "Ореховый б-р, 61 стр.2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.75709,
+                    55.61691
+                ]
+            },
+            "properties": {
+                "name": "Ореховый бульвар, 61к2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.752984,
+                        55.614587
+                    ],
+                    [
+                        37.761195,
+                        55.619233
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MDg5MBJC0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCe0YDQtdGF0L7QstGL0Lkg0LHRg9C70YzQstCw0YAsIDYx0LoyIgoNQgcXQhW3d15C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ореховый бульвар, 61к2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 0,
+        "x": 37.75709,
+        "y": 55.61691
+    },
+    {
+        "store": "Дикси",
+        "address": "Шипиловский проезд, 65 стр.1",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.714294,
+                    55.599057
+                ]
+            },
+            "properties": {
+                "name": "Шипиловский проезд, 65к1",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.710189,
+                        55.596732
+                    ],
+                    [
+                        37.718399,
+                        55.601381
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNTA0ORJG0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCo0LjQv9C40LvQvtCy0YHQutC40Lkg0L_RgNC-0LXQt9C0LCA2NdC6MSIKDW_bFkIVb2VeQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Шипиловский проезд, 65к1",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 4,
+        "day": 1,
+        "x": 37.714294,
+        "y": 55.599057
+    },
+    {
+        "store": "Лента",
+        "address": "Генерала Белова ул, 59",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.727266,
+                    55.602825
+                ]
+            },
+            "properties": {
+                "name": "улица Генерала Белова, 59",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.72316,
+                        55.600501
+                    ],
+                    [
+                        37.731371,
+                        55.605149
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNjAzNhJI0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JPQtdC90LXRgNCw0LvQsCDQkdC10LvQvtCy0LAsIDU5IgoNuegWQhVLaV5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Генерала Белова, 59",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 2,
+        "x": 37.727266,
+        "y": 55.602825
+    },
+    {
+        "store": "Пятерочка",
+        "address": "115573, Москва г, Ореховый б-р, дом № 31",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.733087,
+                    55.614358
+                ]
+            },
+            "properties": {
+                "name": "Ореховый бульвар, 31",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.728981,
+                        55.612034
+                    ],
+                    [
+                        37.737192,
+                        55.616681
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzOTc4MxI_0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCe0YDQtdGF0L7QstGL0Lkg0LHRg9C70YzQstCw0YAsIDMxIgoNr-4WQhUadV5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ореховый бульвар, 31",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 3,
+        "x": 37.733087,
+        "y": 55.614358
+    },
+    {
+        "store": "Пятерочка",
+        "address": "115573, Москва г, Ореховый б-р, дом № 43",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.7418,
+                    55.614439
+                ]
+            },
+            "properties": {
+                "name": "Ореховый бульвар, 43",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.737695,
+                        55.612116
+                    ],
+                    [
+                        37.745906,
+                        55.616763
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzOTc3NhI_0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCe0YDQtdGF0L7QstGL0Lkg0LHRg9C70YzQstCw0YAsIDQzIgoNnPcWQhUwdV5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ореховый бульвар, 43",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 4,
+        "x": 37.7418,
+        "y": 55.614439
+    },
+    {
+        "store": "Пятерочка",
+        "address": "115682, Москва г, Задонский проезд, дом № 36, корпус 2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.758015,
+                    55.620209
+                ]
+            },
+            "properties": {
+                "name": "Задонский проезд, 36к2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.75391,
+                        55.617886
+                    ],
+                    [
+                        37.76212,
+                        55.622533
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MjQ4NxJC0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCX0LDQtNC-0L3RgdC60LjQuSDQv9GA0L7QtdC30LQsIDM20LoyIgoNNggXQhUYe15C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Задонский проезд, 36к2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 0,
+        "day": 0,
+        "x": 37.758015,
+        "y": 55.620209
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Борисовский проезд, 11 стр.А",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.72122,
+                    55.626228
+                ]
+            },
+            "properties": {
+                "name": "Борисовский проезд, 11А",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.717115,
+                        55.623905
+                    ],
+                    [
+                        37.725325,
+                        55.628551
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0NTQ5NBJF0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCR0L7RgNC40YHQvtCy0YHQutC40Lkg0L_RgNC-0LXQt9C0LCAxMdCQIgoNh-IWQhVBgV5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Борисовский проезд, 11А",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 0,
+        "day": 1,
+        "x": 37.72122,
+        "y": 55.626228
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Борисовский проезд, 40",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.72573,
+                    55.616163
+                ]
+            },
+            "properties": {
+                "name": "Борисовский проезд, 40к2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.721624,
+                        55.613839
+                    ],
+                    [
+                        37.729835,
+                        55.618486
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MDY4NRJG0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCR0L7RgNC40YHQvtCy0YHQutC40Lkg0L_RgNC-0LXQt9C0LCA0MNC6MiIKDSfnFkIV9HZeQg,,",
+                "GeocoderMetaData": {
+                    "precision": "number",
+                    "text": "Россия, Москва, Борисовский проезд, 40к2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 0,
+        "day": 2,
+        "x": 37.72573,
+        "y": 55.616163
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Борисовский проезд, 5",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.716064,
+                    55.625567
+                ]
+            },
+            "properties": {
+                "name": "Борисовский проезд, 5",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.711958,
+                        55.623244
+                    ],
+                    [
+                        37.720169,
+                        55.62789
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0NTI0NxJC0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCR0L7RgNC40YHQvtCy0YHQutC40Lkg0L_RgNC-0LXQt9C0LCA1IgoNP90WQhWVgF5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Борисовский проезд, 5",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 3,
+        "day": 3,
+        "x": 37.716064,
+        "y": 55.625567
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Воронежская ул, 9",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.729538,
+                    55.610397
+                ]
+            },
+            "properties": {
+                "name": "Воронежская улица, 9",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.725433,
+                        55.608073
+                    ],
+                    [
+                        37.733644,
+                        55.612721
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzODI3MRJA0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCS0L7RgNC-0L3QtdC20YHQutCw0Y8g0YPQu9C40YbQsCwgOSIKDQvrFkIVDHFeQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Воронежская улица, 9",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 4,
+        "x": 37.729538,
+        "y": 55.610397
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Генерала Белова ул, 20",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.722567,
+                    55.60816
+                ]
+            },
+            "properties": {
+                "name": "улица Генерала Белова, 20",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.718462,
+                        55.605836
+                    ],
+                    [
+                        37.726673,
+                        55.610484
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=CgoxNjE5MDM4OTI5EkjQoNC-0YHRgdC40Y8sINCc0L7RgdC60LLQsCwg0YPQu9C40YbQsCDQk9C10L3QtdGA0LDQu9CwINCR0LXQu9C-0LLQsCwgMjAiCg3o4xZCFcFuXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Генерала Белова, 20",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 0,
+        "x": 37.722567,
+        "y": 55.60816
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Генерала Белова ул, 28 стр.4",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.722846,
+                    55.605439
+                ]
+            },
+            "properties": {
+                "name": "улица Генерала Белова, 28с4",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.718741,
+                        55.603115
+                    ],
+                    [
+                        37.726951,
+                        55.607763
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=CgozNjQ2NzQ2OTQ0EkvQoNC-0YHRgdC40Y8sINCc0L7RgdC60LLQsCwg0YPQu9C40YbQsCDQk9C10L3QtdGA0LDQu9CwINCR0LXQu9C-0LLQsCwgMjjRgTQiCg0x5BZCFfhrXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Генерала Белова, 28с4",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 1,
+        "x": 37.722846,
+        "y": 55.605439
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Генерала Белова ул, 29",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.72131,
+                    55.615029
+                ]
+            },
+            "properties": {
+                "name": "улица Генерала Белова, 29",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.717205,
+                        55.612706
+                    ],
+                    [
+                        37.725415,
+                        55.617352
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MDEyNRJI0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JPQtdC90LXRgNCw0LvQsCDQkdC10LvQvtCy0LAsIDI5IgoNn-IWQhXLdV5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Генерала Белова, 29",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 2,
+        "x": 37.72131,
+        "y": 55.615029
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Гурьевский проезд, 15 стр.1",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.748556,
+                    55.605022
+                ]
+            },
+            "properties": {
+                "name": "Гурьевский проезд, 15к1",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.74445,
+                        55.602698
+                    ],
+                    [
+                        37.752661,
+                        55.607346
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNjU5MhJE0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCT0YPRgNGM0LXQstGB0LrQuNC5INC_0YDQvtC10LfQtCwgMTXQujEiCg2F_hZCFYtrXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Гурьевский проезд, 15к1",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 3,
+        "x": 37.748556,
+        "y": 55.605022
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Гурьевский проезд, 25",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.754898,
+                    55.608684
+                ]
+            },
+            "properties": {
+                "name": "Гурьевский проезд, 25",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.750793,
+                        55.60636
+                    ],
+                    [
+                        37.759003,
+                        55.611007
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNzUwOBJB0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCT0YPRgNGM0LXQstGB0LrQuNC5INC_0YDQvtC10LfQtCwgMjUiCg0FBRdCFUtvXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Гурьевский проезд, 25",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 4,
+        "x": 37.754898,
+        "y": 55.608684
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Домодедовская ул, 12 стр.1",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.705832,
+                    55.613422
+                ]
+            },
+            "properties": {
+                "name": "Домодедовская улица, вл12к1",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.701727,
+                        55.611099
+                    ],
+                    [
+                        37.709937,
+                        55.615746
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzOTUzNxJM0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCU0L7QvNC-0LTQtdC00L7QstGB0LrQsNGPINGD0LvQuNGG0LAsINCy0LsxMtC6MSIKDcbSFkIVJXReQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Домодедовская улица, вл12к1",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 1,
+        "day": 0,
+        "x": 37.705832,
+        "y": 55.613422
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Домодедовская ул, 4",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.703218,
+                    55.616005
+                ]
+            },
+            "properties": {
+                "name": "Домодедовская улица, 4",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.699112,
+                        55.613682
+                    ],
+                    [
+                        37.707323,
+                        55.618329
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MDY5NhJE0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCU0L7QvNC-0LTQtdC00L7QstGB0LrQsNGPINGD0LvQuNGG0LAsIDQiCg0Z0BZCFcp2XkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Домодедовская улица, 4",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 1,
+        "day": 1,
+        "x": 37.703218,
+        "y": 55.616005
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Домодедовская ул, 42",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.713243,
+                    55.602164
+                ]
+            },
+            "properties": {
+                "name": "Домодедовская улица, 42",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.709138,
+                        55.59984
+                    ],
+                    [
+                        37.717348,
+                        55.604488
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNTkxMBJF0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCU0L7QvNC-0LTQtdC00L7QstGB0LrQsNGPINGD0LvQuNGG0LAsIDQyIgoNXNoWQhWeaF5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Домодедовская улица, 42",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 4,
+        "day": 2,
+        "x": 37.713243,
+        "y": 55.602164
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Елецкая ул, 35 стр.2А",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.740651,
+                    55.602683
+                ]
+            },
+            "properties": {
+                "name": "Елецкая улица, 35к2А",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.736545,
+                        55.600359
+                    ],
+                    [
+                        37.744756,
+                        55.605007
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNTk1OBI-0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCV0LvQtdGG0LrQsNGPINGD0LvQuNGG0LAsIDM10Loy0JAiCg1u9hZCFSZpXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Елецкая улица, 35к2А",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 3,
+        "x": 37.740651,
+        "y": 55.602683
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Каширское ш, 118",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.716782,
+                    55.605515
+                ]
+            },
+            "properties": {
+                "name": "Каширское шоссе, 118к1с2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.712677,
+                        55.603191
+                    ],
+                    [
+                        37.720888,
+                        55.607839
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNjc2MBJE0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCa0LDRiNC40YDRgdC60L7QtSDRiNC-0YHRgdC1LCAxMTjQujHRgTIiCg383RZCFQxsXkI,",
+                "GeocoderMetaData": {
+                    "precision": "number",
+                    "text": "Россия, Москва, Каширское шоссе, 118к1с2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 4,
+        "x": 37.716782,
+        "y": 55.605515
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Каширское ш, 96 стр.1",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.7123,
+                    55.614927
+                ]
+            },
+            "properties": {
+                "name": "Каширское шоссе, 96к1",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.708194,
+                        55.612604
+                    ],
+                    [
+                        37.716405,
+                        55.617251
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MDE0NRJA0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCa0LDRiNC40YDRgdC60L7QtSDRiNC-0YHRgdC1LCA5NtC6MSIKDWXZFkIVr3VeQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Каширское шоссе, 96к1",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 3,
+        "day": 0,
+        "x": 37.7123,
+        "y": 55.614927
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Маршала Захарова ул, 16 стр.2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.698106,
+                    55.621587
+                ]
+            },
+            "properties": {
+                "name": "улица Маршала Захарова, 16к2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.694001,
+                        55.619264
+                    ],
+                    [
+                        37.702212,
+                        55.62391
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MzUwMBJN0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JzQsNGA0YjQsNC70LAg0JfQsNGF0LDRgNC-0LLQsCwgMTbQujIiCg3dyhZCFYJ8XkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Маршала Захарова, 16к2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 1,
+        "day": 1,
+        "x": 37.698106,
+        "y": 55.621587
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Маршала Захарова ул, 5",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.705104,
+                    55.622482
+                ]
+            },
+            "properties": {
+                "name": "улица Маршала Захарова, 5",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.700999,
+                        55.620159
+                    ],
+                    [
+                        37.70921,
+                        55.624805
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0Mzk1NhJJ0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JzQsNGA0YjQsNC70LAg0JfQsNGF0LDRgNC-0LLQsCwgNSIKDQbSFkIVa31eQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Маршала Захарова, 5",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 3,
+        "day": 2,
+        "x": 37.705104,
+        "y": 55.622482
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Мусы Джалиля ул, 15 строение 2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.743992,
+                    55.624332
+                ]
+            },
+            "properties": {
+                "name": "улица Мусы Джалиля, 15с2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.739887,
+                        55.622009
+                    ],
+                    [
+                        37.748098,
+                        55.626655
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0NDU5NxJF0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JzRg9GB0Ysg0JTQttCw0LvQuNC70Y8sIDE10YEyIgoN2PkWQhVRf15C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Мусы Джалиля, 15с2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 0,
+        "day": 3,
+        "x": 37.743992,
+        "y": 55.624332
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Мусы Джалиля ул, 20",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.742276,
+                    55.623402
+                ]
+            },
+            "properties": {
+                "name": "улица Мусы Джалиля, 20",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.738171,
+                        55.621079
+                    ],
+                    [
+                        37.746382,
+                        55.625725
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0NDIwMxJC0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JzRg9GB0Ysg0JTQttCw0LvQuNC70Y8sIDIwIgoNGPgWQhVdfl5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Мусы Джалиля, 20",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 0,
+        "day": 0,
+        "x": 37.742276,
+        "y": 55.623402
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Мусы Джалиля ул, 27",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.745043,
+                    55.617861
+                ]
+            },
+            "properties": {
+                "name": "улица Мусы Джалиля, 27к3",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.740938,
+                        55.615537
+                    ],
+                    [
+                        37.749149,
+                        55.620184
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MTQzOBJF0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JzRg9GB0Ysg0JTQttCw0LvQuNC70Y8sIDI30LozIgoN7foWQhWweF5C",
+                "GeocoderMetaData": {
+                    "precision": "number",
+                    "text": "Россия, Москва, улица Мусы Джалиля, 27к3",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 2,
+        "day": 2,
+        "x": 37.745043,
+        "y": 55.617861
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Мусы Джалиля ул, 36 стр.3",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.740713,
+                    55.618013
+                ]
+            },
+            "properties": {
+                "name": "улица Мусы Джалиля, 36к3",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.736608,
+                        55.61569
+                    ],
+                    [
+                        37.744819,
+                        55.620337
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MTUyORJF0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JzRg9GB0Ysg0JTQttCw0LvQuNC70Y8sIDM20LozIgoNffYWQhXYeF5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Мусы Джалиля, 36к3",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 0,
+        "day": 4,
+        "x": 37.740713,
+        "y": 55.618013
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Мусы Джалиля ул, 4",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.741091,
+                    55.629511
+                ]
+            },
+            "properties": {
+                "name": "улица Мусы Джалиля, 4",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.736985,
+                        55.627188
+                    ],
+                    [
+                        37.745196,
+                        55.631834
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0NjUxMhJB0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JzRg9GB0Ysg0JTQttCw0LvQuNC70Y8sIDQiCg3g9hZCFZ6EXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Мусы Джалиля, 4",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 0,
+        "day": 0,
+        "x": 37.741091,
+        "y": 55.629511
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Ореховый б-р, 12 стр.2А",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.713189,
+                    55.606187
+                ]
+            },
+            "properties": {
+                "name": "Ореховый бульвар, 12к2А",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.709084,
+                        55.603863
+                    ],
+                    [
+                        37.717294,
+                        55.608511
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNjk2NBJE0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCe0YDQtdGF0L7QstGL0Lkg0LHRg9C70YzQstCw0YAsIDEy0Loy0JAiCg1O2hZCFbxsXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ореховый бульвар, 12к2А",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 1,
+        "x": 37.713189,
+        "y": 55.606187
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Ореховый б-р, 9",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.709919,
+                    55.610311
+                ]
+            },
+            "properties": {
+                "name": "Ореховый бульвар, 9",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.705814,
+                        55.607987
+                    ],
+                    [
+                        37.714024,
+                        55.612634
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzODMzORI-0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCe0YDQtdGF0L7QstGL0Lkg0LHRg9C70YzQstCw0YAsIDkiCg311hZCFfZwXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ореховый бульвар, 9",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 1,
+        "day": 3,
+        "x": 37.709919,
+        "y": 55.610311
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Ореховый проезд, 35 стр.2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.734883,
+                    55.618349
+                ]
+            },
+            "properties": {
+                "name": "Ореховый проезд, 35к2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.730778,
+                        55.616026
+                    ],
+                    [
+                        37.738989,
+                        55.620672
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MTY5OBJA0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCe0YDQtdGF0L7QstGL0Lkg0L_RgNC-0LXQt9C0LCAzNdC6MiIKDYbwFkIVMXleQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ореховый проезд, 35к2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 0,
+        "day": 0,
+        "x": 37.734883,
+        "y": 55.618349
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Ореховый проезд, 9",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.735988,
+                    55.626091
+                ]
+            },
+            "properties": {
+                "name": "Ореховый проезд, 9",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.731883,
+                        55.623768
+                    ],
+                    [
+                        37.740094,
+                        55.628413
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0NTM3NxI80KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCe0YDQtdGF0L7QstGL0Lkg0L_RgNC-0LXQt9C0LCA5IgoNpvEWQhUegV5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ореховый проезд, 9",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 0,
+        "day": 2,
+        "x": 37.735988,
+        "y": 55.626091
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Шипиловская ул, 13 стр.2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.705994,
+                    55.619554
+                ]
+            },
+            "properties": {
+                "name": "Шипиловская улица, 13с2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.701888,
+                        55.61723
+                    ],
+                    [
+                        37.710099,
+                        55.621877
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MjQ0MBJE0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCo0LjQv9C40LvQvtCy0YHQutCw0Y8g0YPQu9C40YbQsCwgMTPRgTIiCg3v0hZCFWx6XkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Шипиловская улица, 13с2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 3,
+        "day": 4,
+        "x": 37.705994,
+        "y": 55.619554
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Шипиловская ул, 23",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.718642,
+                    55.620779
+                ]
+            },
+            "properties": {
+                "name": "Шипиловская улица, 23",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.714537,
+                        55.618456
+                    ],
+                    [
+                        37.722747,
+                        55.623102
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0Mjk4MxJB0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCo0LjQv9C40LvQvtCy0YHQutCw0Y8g0YPQu9C40YbQsCwgMjMiCg3j3xZCFa17XkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Шипиловская улица, 23",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 3,
+        "day": 0,
+        "x": 37.718642,
+        "y": 55.620779
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Шипиловская ул, 36",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.72246,
+                    55.619874
+                ]
+            },
+            "properties": {
+                "name": "Шипиловская улица, 36к2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.718354,
+                        55.617551
+                    ],
+                    [
+                        37.726565,
+                        55.622197
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MjUxNxJE0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCo0LjQv9C40LvQvtCy0YHQutCw0Y8g0YPQu9C40YbQsCwgMzbQujIiCg3M4xZCFcB6XkI,",
+                "GeocoderMetaData": {
+                    "precision": "number",
+                    "text": "Россия, Москва, Шипиловская улица, 36к2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 0,
+        "day": 2,
+        "x": 37.72246,
+        "y": 55.619874
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Шипиловская ул, 62А",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.751134,
+                    55.622202
+                ]
+            },
+            "properties": {
+                "name": "Шипиловская улица, 62А",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.747029,
+                        55.619879
+                    ],
+                    [
+                        37.755239,
+                        55.624525
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MzU1MBJD0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCo0LjQv9C40LvQvtCy0YHQutCw0Y8g0YPQu9C40YbQsCwgNjLQkCIKDSkBF0IVI31eQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Шипиловская улица, 62А",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 0,
+        "day": 4,
+        "x": 37.751134,
+        "y": 55.622202
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Шипиловский проезд, 39 стр.2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.697693,
+                    55.612706
+                ]
+            },
+            "properties": {
+                "name": "Шипиловский проезд, 39к2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.693588,
+                        55.610382
+                    ],
+                    [
+                        37.701798,
+                        55.615029
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzOTMxOBJG0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCo0LjQv9C40LvQvtCy0YHQutC40Lkg0L_RgNC-0LXQt9C0LCAzOdC6MiIKDW_KFkIVaHNeQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Шипиловский проезд, 39к2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 1,
+        "day": 0,
+        "x": 37.697693,
+        "y": 55.612706
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Шипиловский проезд, 43 стр.3",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.700469,
+                    55.611384
+                ]
+            },
+            "properties": {
+                "name": "Шипиловский проезд, 43к3",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.696364,
+                        55.60906
+                    ],
+                    [
+                        37.704574,
+                        55.613707
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzOTAyMRJG0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCo0LjQv9C40LvQvtCy0YHQutC40Lkg0L_RgNC-0LXQt9C0LCA0M9C6MyIKDUfNFkIVDnJeQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Шипиловский проезд, 43к3",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 1,
+        "day": 2,
+        "x": 37.700469,
+        "y": 55.611384
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Шипиловский проезд, 59  стр.3",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.708787,
+                    55.604722
+                ]
+            },
+            "properties": {
+                "name": "Шипиловский проезд, 59к3",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.704682,
+                        55.602398
+                    ],
+                    [
+                        37.712893,
+                        55.607046
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNjU2NRJG0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCo0LjQv9C40LvQvtCy0YHQutC40Lkg0L_RgNC-0LXQt9C0LCA1OdC6MyIKDc3VFkIVPWteQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Шипиловский проезд, 59к3",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 1,
+        "day": 3,
+        "x": 37.708787,
+        "y": 55.604722
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Ясеневая ул, 12 стр.2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.7305,
+                    55.602301
+                ]
+            },
+            "properties": {
+                "name": "Ясеневая улица, 12к2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.726394,
+                        55.599977
+                    ],
+                    [
+                        37.734605,
+                        55.604626
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=CgozMTE2OTU2MTY3Ej7QoNC-0YHRgdC40Y8sINCc0L7RgdC60LLQsCwg0K_RgdC10L3QtdCy0LDRjyDRg9C70LjRhtCwLCAxMtC6MiIKDQjsFkIVwmheQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ясеневая улица, 12к2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 2,
+        "day": 0,
+        "x": 37.7305,
+        "y": 55.602301
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Ясеневая ул, 31",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.738171,
+                    55.605165
+                ]
+            },
+            "properties": {
+                "name": "Ясеневая улица, 31к1",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.734066,
+                        55.60284
+                    ],
+                    [
+                        37.742276,
+                        55.607489
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNjYwMBI-0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCv0YHQtdC90LXQstCw0Y8g0YPQu9C40YbQsCwgMzHQujEiCg3j8xZCFbFrXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ясеневая улица, 31к1",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 2,
+        "day": 2,
+        "x": 37.738171,
+        "y": 55.605165
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Ясеневая ул, 39",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.741836,
+                    55.60636
+                ]
+            },
+            "properties": {
+                "name": "Ясеневая улица, 39",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.737731,
+                        55.604036
+                    ],
+                    [
+                        37.745942,
+                        55.608684
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNjkxMxI70KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCv0YHQtdC90LXQstCw0Y8g0YPQu9C40YbQsCwgMzkiCg2k9xZCFepsXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ясеневая улица, 39",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 2,
+        "cluster": 2,
+        "day": 4,
+        "x": 37.741836,
+        "y": 55.60636
+    },
+    {
+        "store": "Пятерочка",
+        "address": "Ясеневая ул, 40",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.746058,
+                    55.608267
+                ]
+            },
+            "properties": {
+                "name": "Ясеневая улица, 40",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.741953,
+                        55.605943
+                    ],
+                    [
+                        37.750164,
+                        55.61059
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjYzNzQyNBI70KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCv0YHQtdC90LXQstCw0Y8g0YPQu9C40YbQsCwgNDAiCg33-xZCFd1uXkI,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ясеневая улица, 40",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 2,
+        "day": 0,
+        "x": 37.746058,
+        "y": 55.608267
+    },
+    {
+        "store": "Тандер СМ",
+        "address": "Борисовский проезд, 15 стр.1/2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.725307,
+                    55.626436
+                ]
+            },
+            "properties": {
+                "name": "Борисовский проезд, 15к1с2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.721202,
+                        55.624113
+                    ],
+                    [
+                        37.729413,
+                        55.628759
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0NTU3NhJJ0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCR0L7RgNC40YHQvtCy0YHQutC40Lkg0L_RgNC-0LXQt9C0LCAxNdC6MdGBMiIKDbbmFkIVeIFeQg,,",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Борисовский проезд, 15к1с2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 0,
+        "day": 1,
+        "x": 37.725307,
+        "y": 55.626436
+    },
+    {
+        "store": "Тандер СМ",
+        "address": "Генерала Белова ул, 23",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.720142,
+                    55.616509
+                ]
+            },
+            "properties": {
+                "name": "улица Генерала Белова, 23",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.716037,
+                        55.614185
+                    ],
+                    [
+                        37.724247,
+                        55.618832
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MDg4NRJI0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JPQtdC90LXRgNCw0LvQsCDQkdC10LvQvtCy0LAsIDIzIgoNbeEWQhVOd15C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, улица Генерала Белова, 23",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 3,
+        "day": 2,
+        "x": 37.720142,
+        "y": 55.616509
+    },
+    {
+        "store": "Тандер СМ",
+        "address": "Маршала Захарова ул, 2 стр.1",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.707152,
+                    55.624032
+                ]
+            },
+            "properties": {
+                "name": "улица Маршала Захарова, 2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.703047,
+                        55.621709
+                    ],
+                    [
+                        37.711258,
+                        55.626355
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjkxMTAyMxJJ0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINGD0LvQuNGG0LAg0JzQsNGA0YjQsNC70LAg0JfQsNGF0LDRgNC-0LLQsCwgMiIKDR_UFkIVAn9eQg,,",
+                "GeocoderMetaData": {
+                    "precision": "number",
+                    "text": "Россия, Москва, улица Маршала Захарова, 2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 3,
+        "day": 3,
+        "x": 37.707152,
+        "y": 55.624032
+    },
+    {
+        "store": "Тандер СМ",
+        "address": "Ореховый б-р, 71 стр.2",
+        "ya": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.761743,
+                    55.619274
+                ]
+            },
+            "properties": {
+                "name": "Ореховый бульвар, 71к2",
+                "description": "Москва, Россия",
+                "boundedBy": [
+                    [
+                        37.757638,
+                        55.616951
+                    ],
+                    [
+                        37.765848,
+                        55.621597
+                    ]
+                ],
+                "uri": "ymapsbm1://geo?data=Cgg1NjY0MjAzMBJC0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAsINCe0YDQtdGF0L7QstGL0Lkg0LHRg9C70YzQstCw0YAsIDcx0LoyIgoNBQwXQhUjel5C",
+                "GeocoderMetaData": {
+                    "precision": "exact",
+                    "text": "Россия, Москва, Ореховый бульвар, 71к2",
+                    "kind": "house"
+                }
+            }
+        },
+        "visit_frequency": 1,
+        "cluster": 1,
+        "day": 4,
+        "x": 37.761743,
+        "y": 55.619274
+    }
+]
