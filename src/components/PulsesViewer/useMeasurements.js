@@ -1,6 +1,6 @@
 import { select, pointer } from "d3-selection"
 import { zoom, ZoomTransform, zoomIdentity } from "d3-zoom"
-import { extent, sum, cumsum, bisect, quantile, mean } from "d3-array"
+import { extent, sum, cumsum, bisect, bisector, quantile, mean } from "d3-array"
 import { interpolateRainbow } from 'd3-scale-chromatic'
 import { clamp } from 'lodash-es'
 
@@ -219,21 +219,46 @@ export default  (props) => {
         // const minX = Math.min(state.x1,state.x2)
         // const maxX = Math.max(state.x1,state.x2)
         const dT = xScaleOrigin.value.invert(state.width)
-        let rangeIds = [bisect(cumsumData.value, scaledMinX), bisect(cumsumData.value, scaledMaxX)].sort((a,b) => a-b)
-        const cumsumPulses = cumsumData.value.slice(rangeIds[0], rangeIds[1])
-        const pulses = props.data.value.slice(rangeIds[0], rangeIds[1])
-        const minmaxFreq = extent(pulses)
+        // let rangeIds = [bisect(cumsumData.value, scaledMinX), bisect(cumsumData.value, scaledMaxX)].sort((a,b) => a-b)
+        const pulsesBisect = bisector(d => d.time).left
+        // console.log(pulsesBisect);
+        let rangeIds = [pulsesBisect(data.value, scaledMinX), pulsesBisect(data.value, scaledMaxX)].sort((a,b) => a-b)
+        // console.log(rangeIds);
+        const pulses = data.value.slice(rangeIds[0], rangeIds[1])
+        const minmaxFreq = extent(pulses, (d) => d.width)
+        const averageTime = pulses.reduce((acc, curr) => acc + curr.width, 0) / pulses.length
         // quantile @pulses.value.map((d)->d.w), 0.05
-        const q = quantile(pulses, 0.05)
+        const Nfalling = pulses.filter((d) => d.level === 0).length 
+        const Nrising = pulses.filter((d) => d.level === 1).length 
+        const q = quantile(pulses.map((d) => d.width), 0.05)
         const baud = parseInt(1 / q*1000*1000)
         const measurementId = measurements.indexOf(state)
+
+        // ΔT	0.9024258921333334	s
+        // Nfalling	278
+        // Nrising	279	
+        // fmin	160.86998487821955	Hz
+        // fmax	5871.9906048146295	Hz
+        // fmean	309.09818270282125	Hz
+        // Tstd	0.0013018705305734958	s
+        // fbaud	17857.142857131003	Hz
+        // Pmin	0.00035439999999994145	s
+        // Pmean	0.0032407480144404327	s
+        // PSDev	0.0013422704540369177	s
+        // Pmax	0.006492899999999963	s
+        // Count	277	
+
+        // console.log(pulses.length);
+        // console.log(averageTime, q);
+        // console.log(dT / 1000_000, q);
         return {
           measurementId,
+          averageTime,
           scaledX1,scaledX2,dT,
           minX, maxX,
           rangeIds,
+          Nfalling, Nrising,
           pulses,
-          cumsumPulses,
           minmaxFreq,
           baud,
         }

@@ -26,7 +26,7 @@ function convertCSVtoObject(csv) {
   let lines = csv.split("\n");
   let result = [];
   let headers = lines[0].split(",");
-  for (let i = 1; i < lines.length; i++) {
+  for (let i = 1; i < lines.length - 1; i++) {
     let obj = {};
     let currentline = lines[i].split(",");
     for (let j = 0; j < headers.length; j++) {
@@ -38,39 +38,21 @@ function convertCSVtoObject(csv) {
 }
 
 
-
-function convertFromLogic2Csv(csv) {
-  let lines = csv.split("\n");
-  let result = [0];
-  // let headers = lines[0].split(",");
-
-  for (let i = 1; i < lines.length; i++) {
-    // let obj = {};
-    let currentline = lines[i].split(",");
-    let c = lines[i].split(',')
-    let n = lines[i+1]
-    let w = 0
-    if (n) {
-      // console.log(n.split(","));
-      w = +n.split(",")[0] - +c[0]
-      w *= 1000_000
-      console.log(w);
-      result.push(+w.toFixed(0));
-    }
-    // let width = 
-    // for (let j = 0; j < headers.length; j++) {
-    //   obj[headers[j]] = +currentline[j];
-    // }
-  }
-  return result;
-}
-
 // console.log(convertFromLogic2Csv(digital_csv));
 let csvL = convertCSVtoObject(digital_csv)
-csvL = csvL.map((d) => { return {
-  "time": d["Time [s]"],
-  "level": d["Channel 0"],
-}})
+csvL = csvL.map((d,i) => {
+  const next = csvL[i+1]
+  let time = d["Time [s]"] * 1_000_000
+  let level = d["Channel 0"] 
+  let width = 0
+  if (next) {
+    width = next['Time [s]'] * 1_000_000 - time 
+  }
+  return {
+    time, level, width,
+  }
+})
+csvL = csvL.filter(d => d.width > 0)
 console.log(csvL);
 
 //////////////////
@@ -82,9 +64,12 @@ let spl = sample_pulses_logic.map((d) => {
 })
 //////////////////
 
-const pulses = reactive([[0,23,23,233,323,212,42,424,242,122,324],[0,123,33,44,22,111,422]])
-// const pulses = reactive([])
-// pulses.push(csvL)
+// const pulses = reactive([[0,23,23,233,323,212,42,424,242,122,324],[0,123,33,44,22,111,422]])
+const pulses = reactive([])
+pulses.push(csvL)
+
+
+
 const currentPulsesId = ref(0)
 const currentPulses = computed(() => pulses[currentPulsesId.value])
 

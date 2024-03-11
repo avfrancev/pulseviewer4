@@ -128,38 +128,38 @@
                 ) {{ tick/1000 }}
           //- g.chart(:transform="`translate(0,${sizes.chart.y})`")
           g.chart
-            path.fill-none.stroke-secondary(stroke-width="2" :d="genLine(cumsumData)" dy="123")
+            path.fill-none.stroke-secondary(stroke-width="2" :d="genLine(props.data)")
           g.arrows(
-            v-if="xScaleOrigin((props.data[pos.bb]) * t.k) > 15"
+            v-if="xScaleOrigin((props.data[pulseIdUnderCursor]?.width) * t.k) > 15"
             )
             path.fill-none.stroke-base-content(
               marker-start='url(#head)'
               marker-end='url(#head)'
               :transform="`translate(0,${sizes.chart.y - 8})`"
-              stroke-width="1" :d="`M${xScaleOrigin(cumsumData[pos.bb-1])} 0 L${xScaleOrigin(cumsumData[pos.bb])} 0`")
+              stroke-width="1" :d="`M${xScaleOrigin(props.data[pulseIdUnderCursor]?.time)} 0 L${xScaleOrigin(cumsumData[pulseIdUnderCursor])} 0`")
             path.fill-none.stroke-base-content(
-              v-if="props.data[pos.bb+1]"
+              v-if="props.data[pulseIdUnderCursor+1]"
               marker-start='url(#head)'
               marker-end='url(#head)'
               :transform="`translate(0,${sizes.bottom.y + 8})`"
-              stroke-width="1" :d="`M${xScaleOrigin(cumsumData[pos.bb-1])} 0 L${xScaleOrigin(cumsumData[pos.bb+1])} 0`")
+              stroke-width="1" :d="`M${xScaleOrigin(props.data[pulseIdUnderCursor]?.time)} 0 L${xScaleOrigin(cumsumData[pulseIdUnderCursor+1])} 0`")
             g(:transform="`scale(${1/t.k},1)`")
               text.text-xs.font-bold.fill-base-content(
-                dy="0"
-                dominant-baseline="hanging"
-                :dx="xScaleOrigin(props.data[pos.bb] / 2 * t.k)"
-                :x="xScaleOrigin(cumsumData[pos.bb-1]) * t.k"
+                dy="-16"
+                :y="sizes.chart.y"
+                :dx="xScaleOrigin(props.data[pulseIdUnderCursor]?.width / 2 * t.k)"
+                :x="xScaleOrigin(props.data[pulseIdUnderCursor]?.time) * t.k"
                 text-anchor="middle"
-                ) {{ props.data[pos.bb] }} 
+                ) {{ props.data[pulseIdUnderCursor]?.width.toFixed() }} 
               text.text-xs.font-bold.fill-base-content(
-                v-if="props.data[pos.bb+1]"
+                v-if="props.data[pulseIdUnderCursor+1]"
                 dy="16"
                 :transform="`translate(0,${sizes.bottom.y})`"
                 dominant-baseline="hanging"
-                :x="xScaleOrigin(cumsumData[pos.bb - 1]) * t.k"
-                :dx="xScaleOrigin((props.data[pos.bb] + props.data[pos.bb+1]) / 2 * t.k)"
+                :x="xScaleOrigin(props.data[pulseIdUnderCursor].time) * t.k"
+                :dx="xScaleOrigin((props.data[pulseIdUnderCursor].width + props.data[pulseIdUnderCursor+1].width) / 2 * t.k)"
                 text-anchor="middle"
-                ) {{ props.data[pos.bb] + props.data[pos.bb+1] }} 
+                ) {{ (props.data[pulseIdUnderCursor].width + props.data[pulseIdUnderCursor+1].width).toFixed() }} 
                 //- ) {{ props.data[pos.bb+1] }} 
               //- circle.fill-success(:cx="(xScaleOrigin(cumsumData[pos.bb]*t.k))" cy="2" r=3  )
 
@@ -184,6 +184,7 @@ div.grid.mt-4(:style="['transition: grid-template-rows 0.2s ease-out', {'grid-te
 //- pre {{ props.data }}
 //- pre {{ sizes }}
 //- pre {{ measurements[0].selected }}
+pre {{ props.data[pos.bb] }}
 </template>
 
 <script setup>
@@ -229,17 +230,17 @@ const isMeasurementsOpened = ref(true)
 
 /////////////////////////
 let sizes = reactive({
-  top: { y: 0, height: 30},
-  chart: { y: 30, height: 0},
+  top: { y: 0, height: 40},
+  chart: { y: 40, height: 0},
   bottom: { y: 0, height: 30},
 })
 sizes.chart.height = computed(() => svgElBounds.height.value - sizes.bottom.height - sizes.top.height)
 sizes.bottom.y = computed(() => sizes.chart.height + sizes.chart.y)
 /////////////////////////
 
-const minmaxData = computed(() => extent(props.data.filter(Boolean)))
-const sumData = computed(() => sum(props.data))
-const cumsumData = computed(() => cumsum(props.data))
+const minmaxData = computed(() => extent(props.data, (d) => d.width))
+const sumData = computed(() => sum(props.data, (d) => d.width))
+const cumsumData = computed(() => cumsum(props.data, (d) => d.width))
 
 // watchEffect(() => {
 //   console.log(sumData.value);
@@ -247,8 +248,8 @@ const cumsumData = computed(() => cumsum(props.data))
 
 const genLine = computed(() => 
   line()
-    .x((d,i) => xScaleOrigin.value(d))
-    .y((d,i) => yScale.value((i+1) % 2))
+    .x((d,i) => xScaleOrigin.value(d.time))
+    .y((d,i) => yScale.value(d.level))
     .curve(curveStepAfter)
 )
 
@@ -271,7 +272,7 @@ let zoomObj = ref()
 
 watch([svgElBounds.width, sumData, xOffset], () => {
   // console.log(xOffset.value);
-  xScale.value = scaleLinear([0, sumData.value], [1 ,svgElBounds.width.value-1])
+  xScale.value = scaleLinear([0, sumData.value], [0 ,svgElBounds.width.value])
   xScaleOrigin.value = xScale.value.copy()
 })
 
@@ -319,7 +320,7 @@ onMounted(() => {
   
   zoomObj.value = zoom()
     .scaleExtent([1, sizes.chart.height])
-    .translateExtent([[0,0],[svgElBounds.width.value,svgElBounds.height.value]])
+    .translateExtent([[0,0],[svgElBounds.width.value, svgElBounds.height.value]])
     // .on('mousemove', e => {
       // console.log('start');
     // })
@@ -345,8 +346,9 @@ onMounted(() => {
 
   
   svgElWrapperSel.value.on('mousemove click', (e) => {
-    const [x,y] = pointer(e)
+    const [x] = pointer(e)
     pos.bb = bisect(cumsumData.value, xScale.value.invert(x))
+    pulseIdUnderCursor.value = bisect(cumsumData.value, xScale.value.invert(x))
   })
 
 })
@@ -358,6 +360,8 @@ const pos = reactive({
   q1:'', q2:'',
   ss: {k:1,x:0},
 })
+
+const pulseIdUnderCursor = ref(0)
 
 
 const { Measurements, measurements, measurementsSorted, createMeasurement } = useMeasurements({
@@ -371,7 +375,9 @@ const { Measurements, measurements, measurementsSorted, createMeasurement } = us
   svgElBounds,
 })
 
-measurements.push(createMeasurement(0,200,'green'))
+onMounted(() => {
+  measurements.push(createMeasurement(0,svgElBounds.width.value,'green'))
+})
 
 
 
