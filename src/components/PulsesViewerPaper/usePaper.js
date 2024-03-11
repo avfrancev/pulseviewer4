@@ -1,60 +1,176 @@
 import paper, { Group, Path, Point, PointText, Rect } from 'paper/dist/paper-core'
 import { nextTick } from 'vue';
 
+const createThrottle = (func, delay) => {
+  let throttled = false;
+  let savedArgs;
+  let savedThis;
 
-const debounce = (callback, wait) => {
-  let timeoutId = null;
-  return (...args) => {
-    window.clearTimeout(timeoutId);
-    timeoutId = window.setTimeout(() => {
-      callback(...args);
-    }, wait);
+  return function wrapper(...args) {
+    if (!throttled) {
+      func.apply(this, args);
+      throttled = true;
+      setTimeout(() => (throttled = false), delay);
+    } else {
+      savedArgs = args;
+      savedThis = this;
+    }
   };
+};
+
+function createTestsShapes({paper, props, scaleingGroup}) {
+  let xx = props.xScaleOrigin.value(props.data[400].time)
+
+  var circle = new Path.Circle({
+    center: [xx, 110],
+    fillColor: 'red',
+    radius: 3
+  });
+  var circle2 = new Path.Circle({
+    center: [xx, 110],
+    fillColor: 'skyblue',
+    radius: 13
+  });
+
+  let p = new Path({
+    segments: [[20, 20], [80, 80], [140, 20]],
+    pivot: [20, 20],
+    strokeColor: 'red',
+    strokeWidth: 20,
+    strokeCap: 'round',
+    selected: true,
+    parent: scaleingGroup,
+    strokeScaling: false,
+    strokeJoin: 'round',
+  })
+
+  p.position.x = xx
+
+
+  // watch(() => [props.tz.x], () => {
+  //   nextTick(() => {
+  //     console.log(123123);
+  //     p.lastSegment.point.x = paper.view.viewToProject(props.mouse.elementX.value).x
+  //     p.segments[1].point.x = (p.lastSegment.point.x - p.firstSegment.point.x) / 2 + p.segments[0].point.x
+  //     p.smooth({ type: 'continuous' })
+  //   })
+  // })
+
+  // watch(() => [props.mouse.elementX.value, props.tz.k], () => {
+  watch(() => [props.mouse.elementX.value, props.tz.k], () => {
+    // let x = e.point.x
+    // console.log((e.point.x + tz.x) / tz.k );
+    // circle2.position.x = props.mouse.elementX.value / props.tz.k
+    nextTick(() => {
+      let x = paper.view.viewToProject(props.mouse.elementX.value).x
+      circle2.position.x = x
+      p.lastSegment.point.x = x
+      p.segments[1].point.x = (p.lastSegment.point.x - p.firstSegment.point.x) / 2 + p.segments[0].point.x
+      p.smooth({ type: 'continuous' })
+    })
+
+    // p.needsUpdate = true
+    // console.log(p.segments);
+    // circle2.position.x = paper.view.projectToView(props.mouse.elementX.value).x
+    // circle2.needsUpdate = true
+    // console.log(paper.view.viewToProject(e.point));
+    // console.log(123);
+    // paper.view.update()
+    // console.log(paper.view.requestUpdate);
+  })  
+  
+  return {
+    circle, circle2
+  }
 }
 
-function throttle(func, ms) {
+function createTicks({ paper, props, scaleingGroup }) {
+    
+  const ticksGroup = new Group()
 
-  let isThrottled = false,
-    savedArgs,
-    savedThis;
-
-  function wrapper() {
-
-    if (isThrottled) { // (2)
-      savedArgs = arguments;
-      savedThis = this;
-      return;
+  let ticks = []
+  // watchEffect( () => {
+  //   // console.log(tickz.value.toString());
+  //   let tickz_ = props.xScale.value.ticks()
+  //   if (tickz.value.toString() !== tickz_.toString()) {
+  //     // console.log('tickz changed');
+  //     tickz.value = tickz_
+  //   }
+  // })
+  // scaleingGroup.addChild(ticksGroup)
+  
+  watchEffect(() => {
+    // let x = tickFormat("~s")
+    // console.log(xScale.value.tickFormat(0, 1, 20));
+    // console.log(123);
+    
+    let ticks_ = props.xScale.value.ticks(3)
+    if (ticks.toString() === ticks_.toString()) {
+      // console.log('tickz changed');
+      ticksGroup.children.forEach((t) => {
+        t.scaling.x = 1/props.tz.k
+      })
+      return
     }
 
-    func.apply(this, arguments); // (1)
+    ticks = ticks_
+    ticksGroup.removeChildren()
+    // scaleingGroup.addChild(ticksGroup)
+    nextTick(() => {
+    ticks.forEach((t) => {
+      let x = props.xScale.value(t)
+      let tt = new PointText({
+        // pivot: [x, 0],
+        point: [paper.view.viewToProject(x).x, 10],
+        visible: true,
+        content: `${t/1000}ms`,
+        fillColor: '#fff',
+        justification: 'center',
+        // fontFamily: 'Mono',
+        // fontWeight: 'bold',
+        fontSize: 12,
+        parent: ticksGroup
+      })
+      tt.scale(1/props.tz.k, 1)
+      // g.addChild(tt)
+      // ticksGroup.addChild(tt)
+    })
+    })
 
-    isThrottled = true;
-
-    setTimeout(function () {
-      isThrottled = false; // (3)
-      if (savedArgs) {
-        wrapper.apply(savedThis, savedArgs);
-        savedArgs = savedThis = null;
-      }
-    }, ms);
-  }
-
-  return wrapper;
+    // paper.view.update()
+    // console.log(xScale.value.ticks().map(d => xScale.value(d)));
+    // console.log(xScale.value.format);
+    // console.log(xScale.value.ticks().map(xScale.value.format("~s")))
+  })
+  return { ticksGroup }
 }
 
 function setup(props) {
   const { tz } = props
+  let m = new paper.Matrix()
+
   paper.setup(props.canvas.value)
+
+  let scaleingGroup = new Group()
+
   // paper.view.autoUpdate = false
   // console.log(paper.project);
   // Your Paper.js drawing code goes here
-  let xx = props.xScaleOrigin.value(props.data[400].time)
-  var circle = new Path.Circle(new Point(xx, 100), 3);
-  var circle2 = new Path.Circle(new Point(xx, 100), 3);
-  circle.fillColor = 'red';
-  circle2.fillColor = 'green';
+  // let xx = props.xScaleOrigin.value(props.data[400].time)
+  // var circle = new Path.Circle(new Point(xx, 100), 3, { fillColor : 'red' });
+  // var circle = new Path.Circle({
+  //   center: [xx, 110],
+  //   fillColor: 'red',
+  //   radius: 3
+  // });
+  const { circle, circle2 } = createTestsShapes({ paper, props, scaleingGroup })
+  const { ticksGroup } = createTicks({ paper, props, scaleingGroup })
+  // var circle2 = new Path.Circle(new Point(xx, 100), 3);
+  // circle.fillColor = 'red';
+  // circle.pivot = [xx, 0]
+  // circle2.fillColor = 'green';
   // circle.onFrame = function() {
-  //   circle.scaling.x = tz.k
+  //   circle.scaling.x = 1/tz.k
   //   // console.log('frame', this.scaling.x = 1/this.scaling.x);
   //   // console.log(circle.scaling.x = 1);
   // }
@@ -66,28 +182,29 @@ function setup(props) {
   path.fillColor = 'transparent'; // Set fill color
   path.strokeColor = 'lightblue'; // Set stroke color
   path.strokeWidth = 2; // Set stroke width
+  path.strokeScaling = false
 
 
-  let p1 = new Path([[xx, 100], [xx + 100, 100]])
-  p1.strokeColor = 'pink'; // Set stroke color
-  var text = new paper.PointText({
-    // applyMatrix: false,
-    // justification: 'center',
-    pivot: [0, 0],
-    selected: true,
-    point: [xx, 100],
-    content: 'The contents of the point text',
-    fillColor: '#fff',
-    // fontFamily: 'Courier New',
-    fontWeight: 'bold',
-    fontSize: 15,
-  });
+  // let p1 = new Path([[xx, 100], [xx + 100, 100]])
+  // p1.strokeColor = 'pink'; // Set stroke color
+  // var text = new paper.PointText({
+  //   // applyMatrix: false,
+  //   // justification: 'center',
+  //   pivot: [0, 0],
+  //   selected: true,
+  //   point: [xx, 100],
+  //   content: 'The contents of the point text',
+  //   fillColor: '#fff',
+  //   // fontFamily: 'Courier New',
+  //   fontWeight: 'bold',
+  //   fontSize: 15,
+  // });
 
-  // Add the path to the project
-  paper.project.activeLayer.addChild(path);
+  // // Add the path to the project
+  // paper.project.activeLayer.addChild(path);
 
-  let g = new Group()
-  g.addChildren([circle, circle2, text])
+  // let g = new Group()
+  // scaleingGroup.addChildren([circle, circle2, text])
   // g.addChild(circle2)
   // g.addChild(text)
   // g.addChild(path)
@@ -125,7 +242,6 @@ function setup(props) {
   // })
   ////////////////
 
-  let m = new paper.Matrix()
 
 
   // watch(mouse.x, () => {
@@ -138,32 +254,22 @@ function setup(props) {
   //   console.log(al);
   // })
 
-  let al = paper.project.activeLayer
+  // let al = paper.project.activeLayer
   // let al = paper.view
-  let view = paper.view
+  // let view = paper.view
   // g.applyMatrix = false
 
-  const tool = new paper.Tool()
-  tool.onMouseMove = (e) => {
-    // console.log(e.point);
-    // let x = (e.point.x ) / tz.k - tz.x / tz.k
-    // let x = e.point.x
-    // // console.log((e.point.x + tz.x) / tz.k );
-    // circle2.position.x = x
-    // // console.log(paper.view.viewToProject(e.point));
-    // paper.view.update()
-  }
+  // const tool = new paper.Tool()
+  // tool.onMouseMove = (e) => {
+  //   // console.log(e.point);
+  //   // let x = (e.point.x ) / tz.k - tz.x / tz.k
+  //   // let x = e.point.x
+  //   // // console.log((e.point.x + tz.x) / tz.k );
+  //   // circle2.position.x = x
+  //   // // console.log(paper.view.viewToProject(e.point));
+  //   // paper.view.update()
+  // }
 
-  watch(props.mouse.elementX, () => {
-    // let x = e.point.x
-    // console.log((e.point.x + tz.x) / tz.k );
-    circle2.position.x = props.mouse.elementX.value
-    circle2.needsUpdate = true
-    // console.log(paper.view.viewToProject(e.point));
-    // console.log(123);
-    // paper.view.update()
-    // console.log(paper.view.requestUpdate);
-  })
   // path.onMouseMove = (e) => {
   //   // console.log(view.globalToLocal(e.point));
   //   console.log(e);
@@ -184,7 +290,7 @@ function setup(props) {
       fontSize: 12,
       data: d,
     })
-    g.addChild(t)
+    scaleingGroup.addChild(t)
     texts.push(t)
   })
   
@@ -193,7 +299,7 @@ function setup(props) {
 
     const w = paper.view.bounds.width
 
-  
+    console.log(w, tz.k);
     texts.forEach((t) => {
       // console.log(d);
       let sw = props.xScaleOrigin.value(t.data.width)
@@ -214,69 +320,21 @@ function setup(props) {
     // console.debug('visible texts count:', texts.filter(t => t.visible).length);
 
   }
-  
-  const ticksGroup = new Group()
-  g.addChild(ticksGroup)
-  
-  watchEffect(() => {
-    // let x = tickFormat("~s")
-    // console.log(xScale.value.tickFormat(0, 1, 20));
-    // console.log(123);
-    
-    let ticks = props.xScale.value.ticks()
-    ticksGroup.removeChildren()
-    
-    ticks.forEach((t) => {
-      let x = props.xScale.value(t)
-      let tt = new PointText({
-        pivot: [0, 0],
-        point: [x, 10],
-        visible: true,
-        content: `${t/1000}ms`,
-        fillColor: '#fff',
-        justification: 'center',
-        // fontFamily: 'Mono',
-        // fontWeight: 'bold',
-        fontSize: 12,
-      })
-      g.addChild(tt)
-      ticksGroup.addChild(tt)
-    })
-    // paper.view.update()
-    // console.log(xScale.value.ticks().map(d => xScale.value(d)));
-    // console.log(xScale.value.format);
-    // console.log(xScale.value.ticks().map(xScale.value.format("~s")))
-  })
+
   
   
-  const throttledUpdateData = throttle(updateData, 300)
+  const throttledUpdateData = createThrottle(updateData, 300)
 
   watch(tz, (p, n) => {
-    g.getItems().forEach((item) => {
-      item.scaling.x = m.a / tz.k
+    let v = paper.view
+    v.scaling.x = tz.k
+    v.center = new Point(-tz.x / tz.k + v.bounds.width / 2, v.center.y)
+    scaleingGroup.getItems().forEach((item) => {
+      item.scale(m.a / tz.k, 1)
     })
-    throttledUpdateData()  
-    al.bounds.x = tz.x
-    al.scale(tz.k / m.a, 1, [tz.x, 0])
     m.a = tz.k
-    // console.log(g.getItems());
-    // circle.scaling.x = m.a / tz.k
-    // circle2.scaling.x = m.a / tz.k
-    ///////////////
-    // view.center = [tz.x,0]
-    // view.matrix.tx = tz.x
-    // // view.update()
-    // // console.log(view);
-    // // view.scaling.x = tz.k
-    // view.scale(tz.k/m.a, 1, [0 ,0])
-    // g.scaling.x = tz.k / m.a
-    // // console.log(view.center.x);
-    // // view.x = tz.x
-    // m.a = tz.k
-    // paper.view.update()
-
   })
-  // paper.view.update()
+
 
 }
 

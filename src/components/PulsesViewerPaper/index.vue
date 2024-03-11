@@ -77,7 +77,8 @@ const genLine = computed(() =>
 
 /////////////////////////
 
-const mouse = useMouseInElement(wrapper, { touchAction: 'none' })
+// const mouse = useMouseInElement(wrapper, { touchAction: 'none' })
+const mouse = useMouseInElement(wrapper)
 import usePaper from './usePaper'
 
 
