@@ -1,5 +1,8 @@
 import paper, { Group, Path, Point, PointText, Rect } from 'paper/dist/paper-core'
-import { nextTick } from 'vue';
+import { bisector } from 'd3-array';
+import { colors } from '../../stores/colors'
+import { watchEffect } from 'vue';
+
 
 const createDebounce = (func, delay) => {
   let timeoutId;
@@ -29,6 +32,281 @@ const createThrottle = (func, delay) => {
     }
   };
 };
+
+const createMeasurement = ({props, scaleingGroup}) => {
+  let rect = new Path.Rectangle({
+    point: [120, 0],
+    size: [200, 100],
+    // pivot: [0, 0],
+    fillColor: colors.bc,
+    strokeColor: 'rgba(0,0,0,0.0001)',
+    strokeWidth: 2,
+    strokeCap: 'round',
+    // opacity: 0.3,
+    // selected: true,
+    // parent: scaleingGroup,
+    // dashArray: [5,5],
+    strokeScaling: false,
+    strokeJoin: 'round',
+    data: {
+      canDrag: true
+    }
+  })
+  console.log(rect);
+
+  rect.selected = true
+
+  let t = new paper.Tool()
+  var hitOptions = {
+    // segments: false,
+    stroke: true,
+    fill: true,
+    // curves: true,
+    // 'handle-in': true,
+    // fill: false,
+    // tolerance: 5
+  };
+  let hitResult = null
+  let curve = null
+
+  // t.onMouseMove = function(e) {
+  //   hitOptions.tolerance = 10 / props.tz.k
+  //   hitResult = paper.project.hitTest(e.point, hitOptions)
+  //   console.log(hitResult);
+  // }
+  rect.onMouseDown = function(e) {
+    // return
+    hitOptions.tolerance = 7 / props.tz.k
+    hitResult = paper.project.hitTest(e.point, hitOptions)
+    // console.log(hitResult);
+    if (!hitResult) return
+    if (hitResult.location?.curve) {
+      curve = hitResult.location.curve
+    }
+    if (hitResult.segment?.curve) {
+      curve = hitResult.segment.location.curve
+    }
+    // curve.selected = true
+    // let b = hitResult.item.bounds
+    // let location = hitResult.location
+    // hitResult = hitResult?.item
+    // if (hitResult?.type == 'stroke') {
+      // console.log(hitResult.item.bounds);
+      // hitResult.item.bounds.width += e.delta.x
+      // hitResult.location.point.x += e.delta.x
+      // location.point
+      // e.item.position.x += e.delta.x
+      // }
+  }
+    
+  rect.onMouseDrag = function(e) {
+    // console.log(hitResult);
+    if (hitResult && hitResult.type === 'fill') {
+      hitResult.item.position.x += e.delta.x
+      return
+    }
+    if (curve && hitResult && hitResult.type === 'stroke') {
+
+      // console.log(curve);
+      let { segment1, segment2 } = curve
+      if (segment1.point.y === segment2.point.y) return
+      // console.log(segment1.point.y, segment2.point.y);
+      // if (segment1.point.y === segment2.point.y) return
+      // segment1.point.selected = true
+      segment1.point.x += e.delta.x
+      segment2.point.x += e.delta.x
+      return
+    }
+    // console.log(hitResult.item.bounds.width, hitResult.item.bounds);
+  }
+  //   if (hitResult?.type == 'stroke') {
+  //     hitResult.item?.bounds.width += e.delta.x
+  //     // hitResult.location.point.x += e.delta.x
+  //   }
+  // }
+  // console.log(paper.view.element);
+  // paper.view.element.onmousedown = (event) => {
+  //   console.log(event);
+  // }
+  // rect.onMouseDrag = function (event) {
+  //   console.log(event);
+  //   // rect.position.x += event.delta.x;
+  // }
+}
+
+function createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projectedX, invertedX }) {
+  let p = new Path({
+    segments: [[0, 0], [0, 200]],
+    pivot: [0, 0],
+    // strokeColor: colors.n,
+    strokeWidth: 1,
+    strokeCap: 'round',
+    opacity: 0.3,
+    locked: true,
+    // selected: true,
+    // parent: scaleingGroup,
+    dashArray: [5,5],
+    strokeScaling: false,
+    strokeJoin: 'round',
+  })
+  
+  var circle = new Path.Circle({
+    center: [200, 110],
+    locked: true,
+    // fillColor: 'yellow',
+    radius: 3,
+    parent: scaleingGroup,
+  });
+  
+
+  watch(() => [projectedX.value], () => {
+    p.position.x = projectedX.value
+    const pulsesPath = paper.project.activeLayer.children.pulsesPath
+    let intersection = pulsesPath.getIntersections(p)
+    circle.position = intersection[0]?.point
+  })
+
+  const intersection = computed(() => {
+    const pulsesPath = paper.project.activeLayer.children.pulsesPath
+    // let intersection = pulsesPath.getIntersections(p)
+    return pulsesPath.getIntersections(p)
+  })
+
+  let arrowPath_ = new Path({
+    segments: [[0, 0], [0, 6], [6, 3]],
+    // pivot: [6,0],
+    // fillColor: 'white',
+    strokeScaling: false,
+    closed: true
+  })
+  
+  const arrowDefinition = new paper.SymbolDefinition(arrowPath_);
+
+  function createDimentionLine({ y, textDy=0 }) {
+    let la = arrowDefinition.place()
+    la.pivot = [3, 0]
+    la.position.y = y
+    la.parent = scaleingGroup
+    la.rotate(180)
+    let ra = arrowDefinition.place()
+    ra.pivot = [3, 0]
+    ra.position.y = y
+    ra.parent = scaleingGroup
+    let l = new Path({
+      segments: [[0, 0], [0, 0]],
+      position: [0, y],
+      strokeScaling: false,
+    })
+    let t = new PointText({
+      point: [0, 0],
+      content: '0000',
+      parent: scaleingGroup
+    })
+    function update(x1,x2,text='',_y=y) {
+      la.position.x = x1
+      la.data.x = x1
+      ra.position.x = x2
+      ra.data.x = x2
+      l.segments[0].point.x = la.position.x
+      l.segments[1].point.x = ra.position.x
+      la.position.y = _y
+      ra.position.y = _y
+      l.position.y = _y
+      t.position.x = x1 + (x2 - x1) / 2
+      t.data.posX = t.position.x
+      t.position.y = _y + textDy
+      t.content = text
+      updateLabelPosition()
+    }
+    function hide() {
+      la.visible = false
+      ra.visible = false
+      l.visible = false
+      t.visible = false
+    }
+    function show() {
+      la.visible = true
+      ra.visible = true
+      l.visible = true
+      t.visible = true
+    }
+    hide()
+
+    function updateLabelPosition() {
+      if (t.bounds.width > l.bounds.width) {
+        hide()
+        return
+      }
+      show()
+      let v = paper.view
+      t.position.x = t.data.posX
+      if (t.bounds.left < v.bounds.left + 10 / props.tz.k) {
+        let newLeft = v.bounds.left + 10 / props.tz.k
+        // console.log(t.bounds.right, ra.bounds.right, t.position.x);
+        if (t.bounds.width + newLeft > ra.bounds.left) {
+          t.bounds.right = ra.bounds.left
+          return
+        }
+        t.bounds.left = newLeft
+      } else if (t.bounds.right > v.bounds.right - 10 / props.tz.k) {
+        let newRight = v.bounds.right - 10 / props.tz.k
+        if (newRight - t.bounds.width < la.bounds.right) {
+          t.bounds.left = la.bounds.right
+          return
+        }
+        t.bounds.right = newRight
+      }
+    }
+
+    watch(props.tz, () => {
+      updateLabelPosition()
+    })
+    watchEffect(() => {
+      let color = new paper.Color(colors.bc)
+      arrowPath_.fillColor = color
+      l.strokeColor = color
+      t.fillColor = color
+      // la.fillColor = colors.a
+      // circle.fillColor = colors.a
+    })
+    
+    return { la, ra, l, update, show, hide }
+  }
+
+  const pulsesPath = paper.project.activeLayer.children.pulsesPath
+
+  let topLine = createDimentionLine({y: 40, textDy: -10})
+  let bottomLine = createDimentionLine({y: 160, textDy: 10})
+
+  watchEffect(() => {
+    p.strokeColor = colors.bc
+    circle.fillColor = colors.a
+  })
+
+  watch(dataIDUnderCursor, () => {
+    // console.log(dataIDUnderCursor.value);
+    if (!dataIDUnderCursor.value) {
+      topLine.hide()
+      bottomLine.hide()
+      return
+    }
+    topLine.show()
+    bottomLine.show()
+    let d = props.data[dataIDUnderCursor.value - 1]
+    let d2 = props.data[dataIDUnderCursor.value]
+    topLine.update(props.xScaleOrigin.value(d?.time), props.xScaleOrigin.value(d?.time + d?.width), d.width.toFixed())
+    if (!d2) return
+    bottomLine.update(props.xScaleOrigin.value(d?.time), props.xScaleOrigin.value(d?.time + d?.width + d2?.width), (d.width + d2.width).toFixed())
+
+    return
+  })
+  
+  // const g = new Group()
+  // scaleingGroup.addChild(g)
+
+  
+  
+}
 
 function createTestsShapes({paper, props, scaleingGroup}) {
   let xx = props.xScaleOrigin.value(props.data[400].time)
@@ -101,53 +379,90 @@ function createTicks({ paper, props, scaleingGroup }) {
   const ticksGroup = new Group()
 
   let ticks = []
-  // watchEffect( () => {
-  //   // console.log(tickz.value.toString());
-  //   let tickz_ = props.xScale.value.ticks()
-  //   if (tickz.value.toString() !== tickz_.toString()) {
-  //     // console.log('tickz changed');
-  //     tickz.value = tickz_
-  //   }
+
+  function generateTicks(ticks_) {
+    // console.log({ticks_});
+    ticks = [...ticks_]
+    ticksGroup.removeChildren()
+    ticksGroup.sendToBack()
+    // console.log(paper);
+
+    // scaleingGroup.addChild(ticksGroup)
+    nextTick(() => {
+      ticks_.forEach((t) => {
+        let x = props.xScale.value(t)
+        let tt = new PointText({
+          // pivot: [x, 0],
+          point: [paper.view.viewToProject(x).x, 10],
+          visible: true,
+          content: `${t / 1000}ms`,
+          data: t,
+          fillColor: colors.bc,
+          justification: 'center',
+          // fontFamily: 'Mono',
+          // fontWeight: 'bold',
+          fontSize: 12,
+          parent: ticksGroup
+        })
+        tt.scale(1 / props.tz.k, 1)
+        new Path.Line({
+          from: [paper.view.viewToProject(x).x, 15],
+          to: [paper.view.viewToProject(x).x, 200],
+          // pivot: [paper.view.viewToProject(x).x, 0],
+          dashArray: [4, 4],
+          opacity: 0.3,
+          strokeScaling: false,
+          strokeColor: colors.bc,
+          parent: ticksGroup
+        })
+        // g.addChild(tt)
+        // ticksGroup.addChild(tt)
+      })
+    })
+  }
+
+  watchEffect(() => {
+    let color = new paper.Color(colors.bc)
+    ticksGroup.children.forEach((t) => {
+      t.fillColor = color
+    })
+  })
+
+  let computedTicks = computed(() => props.xScale.value.ticks(3))
+  
+  watch(props.wrapperBounds.width, () => {
+    // console.log('wrapperBounds.width changed');
+    // // ticksGroup.fitBounds(paper.view.bounds)
+    // setTimeout(() => {
+    //   console.log(props.xScale.value.ticks(3), props.xScaleOrigin.value.ticks(3));
+    //   generateTicks(props.xScale.value.ticks(3))
+    // }, 1000)
+  })
+
+  // watch(props.xScale, () => {
+  //   console.log('xScale changed', props.xScale.value.ticks(3));
   // })
-  // scaleingGroup.addChild(ticksGroup)
   
   watchEffect(() => {
     // let x = tickFormat("~s")
     // console.log(xScale.value.tickFormat(0, 1, 20));
     // console.log(123);
     
-    let ticks_ = props.xScale.value.ticks(3)
-    if (ticks.toString() === ticks_.toString()) {
+    // console.log('TICKS');
+    if (ticks.toString() === computedTicks.value.toString()) {
       // console.log('tickz changed');
-      ticksGroup.children.forEach((t) => {
-        t.scaling.x = 1/props.tz.k
+      nextTick(() => {
+        ticksGroup.children.forEach((t) => {
+          // let x = props.xScale.value(t.data)
+          // t.point = [paper.view.viewToProject(x).x, 10]
+          t.scaling.x = 1/props.tz.k
+        })
       })
       return
     }
 
-    ticks = ticks_
-    ticksGroup.removeChildren()
-    // scaleingGroup.addChild(ticksGroup)
-    nextTick(() => {
-    ticks.forEach((t) => {
-      let x = props.xScale.value(t)
-      let tt = new PointText({
-        // pivot: [x, 0],
-        point: [paper.view.viewToProject(x).x, 10],
-        visible: true,
-        content: `${t/1000}ms`,
-        fillColor: '#fff',
-        justification: 'center',
-        // fontFamily: 'Mono',
-        // fontWeight: 'bold',
-        fontSize: 12,
-        parent: ticksGroup
-      })
-      tt.scale(1/props.tz.k, 1)
-      // g.addChild(tt)
-      // ticksGroup.addChild(tt)
-    })
-    })
+    // ticks = ticks_
+    generateTicks(computedTicks.value)
 
     // paper.view.update()
     // console.log(xScale.value.ticks().map(d => xScale.value(d)));
@@ -156,9 +471,6 @@ function createTicks({ paper, props, scaleingGroup }) {
   })
   return { ticksGroup }
 }
-
-
-
 
 function createWidthLabels({ paper, props, scaleingGroup }) {
   const texts = []
@@ -215,14 +527,45 @@ function createWidthLabels({ paper, props, scaleingGroup }) {
     throttledUpdateWidthLabels, debouncedUpdateWidthLabels
   }
 }
-
-function setup(props) {
+function setup(props, { dataIDUnderCursor, projectedX, invertedX }) {
   const { tz } = props
   let m = new paper.Matrix()
 
   paper.setup(props.canvas.value)
 
+  // var pulsesPath2 = new Path({
+  //   name: "pulsesPath",
+  //   pathData: props.genLine.value(props.data),
+  //   strokeColor: 'lightblue',
+  //   strokeWidth: 2,
+  //   strokeScaling: false,
+  // });
+
+  let pulsesPath = new Path({
+    name: "pulsesPath",
+    strokeColor: colors.p,
+    strokeWidth: 1,
+    locked: true,
+    strokeScaling: false,
+  })
+
+  watch(props.wrapperBounds.width, () => {
+    // console.log(props.wrapperBounds.width.value);
+    pulsesPath.removeSegments()
+    props.data.forEach((d) => {
+      pulsesPath.add(new Point(props.xScaleOrigin.value(d.time), d.level ? 150 : 50))
+      pulsesPath.add(new Point(props.xScaleOrigin.value(d.time+d.width), d.level ? 150 : 50))
+    })
+  },{ immediate: true })
+
+  watchEffect(() => {
+    pulsesPath.strokeColor = colors.p
+  })
+  
+  
   let scaleingGroup = new Group()
+
+  createMeasurement({ props, scaleingGroup })
 
   // paper.view.autoUpdate = false
   // console.log(paper.project);
@@ -248,17 +591,13 @@ function setup(props) {
 
   // const d = props.genLine.value(props.data)
 
-  var pulsesPath = new Path({
-    pathData: props.genLine.value(props.data),
-    strokeColor: 'lightblue',
-    strokeWidth: 2,
-    strokeScaling: false,
-  });
 
+
+  // createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projectedX, invertedX })
   
 
 
-  const { throttledUpdateWidthLabels, debouncedUpdateWidthLabels } = createWidthLabels({paper, props, scaleingGroup})
+  // const { throttledUpdateWidthLabels, debouncedUpdateWidthLabels } = createWidthLabels({paper, props, scaleingGroup})
 
   watch(tz, (p, n) => {
     let v = paper.view
@@ -272,8 +611,8 @@ function setup(props) {
       item.scale(m.a / tz.k, 1)
     })
     m.a = tz.k
-    throttledUpdateWidthLabels()
-    debouncedUpdateWidthLabels()
+    // throttledUpdateWidthLabels()
+    // debouncedUpdateWidthLabels()
   })
 
 
@@ -281,9 +620,26 @@ function setup(props) {
 
 export default (props) => {
 
+  const projectedX = computed(() => {
+    // console.log(paper);
+    if (props.mouse.isOutside.value) return null
+    return paper?.view?.viewToProject(props.mouse.elementX.value).x || 0
+  })
+  
+  const invertedX = computed(() => props.xScaleOrigin.value.invert(projectedX.value))
+
+  const dataIDUnderCursor = computedEager(() => {
+    if (props.mouse.isOutside.value) return null
+    let id = bisector((d) => d.time).right(props.data, invertedX.value)
+    return id
+  })
+  // watchEffect(() => {
+  //   console.log(dataIDUnderCursor.value);
+  // })
+  
   onMounted(() => {
     nextTick(() => {
-      setup(props)
+      setup(props, { dataIDUnderCursor, projectedX, invertedX })
     })
   })
 

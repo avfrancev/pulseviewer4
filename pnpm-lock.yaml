@@ -11,6 +11,9 @@ dependencies:
   '@vueuse/gesture':
     specifier: 2.0.0
     version: 2.0.0(vue@3.4.21)
+  alea:
+    specifier: ^1.0.1
+    version: 1.0.1
   csv-parse:
     specifier: ^5.5.5
     version: 5.5.5
@@ -24,6 +27,9 @@ dependencies:
     specifier: ^3.0.0
     version: 3.0.0
   d3-ease:
+    specifier: ^3.0.1
+    version: 3.0.1
+  d3-random:
     specifier: ^3.0.1
     version: 3.0.1
   d3-scale:
@@ -47,6 +53,9 @@ dependencies:
   paper:
     specifier: ^0.12.17
     version: 0.12.17
+  perlin-noise:
+    specifier: ^0.0.1
+    version: 0.0.1
   popmotion:
     specifier: ^11.0.5
     version: 11.0.5
@@ -56,6 +65,9 @@ dependencies:
   sass:
     specifier: ^1.71.1
     version: 1.71.1
+  simplex-noise:
+    specifier: ^4.0.1
+    version: 4.0.1
   vue:
     specifier: ^3.4.21
     version: 3.4.21
@@ -767,6 +779,10 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
     dev: true
+
+  /alea@1.0.1:
+    resolution: {integrity: sha512-QU+wv+ziDXaMxRdsQg/aH7sVfWdhKps5YP97IIwFkHCsbDZA3k87JXoZ5/iuemf4ntytzIWeScrRpae8+lDrXA==}
+    dev: false
 
   /ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -2099,6 +2115,10 @@ packages:
     resolution: {integrity: sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==}
     dev: true
 
+  /perlin-noise@0.0.1:
+    resolution: {integrity: sha512-33wNN1FN7jZPF0ISkSF8BLag71wjBWzrpzd/m00iFsxtIhKeZ8VaKBQtzPX3TBegK9GYPXwGzR3oJp9v2T7QuQ==}
+    dev: false
+
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
 
@@ -2445,6 +2465,10 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
     dev: true
+
+  /simplex-noise@4.0.1:
+    resolution: {integrity: sha512-zl/+bdSqW7HJOQ0oDbxrNYaF4F5ik0i7M6YOYmEoIJNtg16NpvWaTTM1Y7oV/7T0jFljawLgYPS81Uu2rsfo1A==}
+    dev: false
 
   /sortablejs@1.14.0:
     resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==}

@@ -1,10 +1,20 @@
 <template lang="pug">
-.chart.relative
+.chart.relative.h-full.flex.flex-col
   //- pre {{ pos }} {{ tz }}
   //- button.btn(@click="paper.project.activeLayer.matrix.apply()") scale
-  pre {{ mouse }}
-  div(class="h-[200px] border1" ref="wrapper")
-    canvas.w-full.h-full.pointer-events-none.select-none.touch-none(ref="canvas")
+  //- pre(:style="{background: colors.p}") {{ mouse }}
+  button.btn(@click="mode = mode === 'dark' ? 'light' : 'dark'") {{ mode }}
+  .flex-1.flex.flex-col.items-center.justify-center
+    div(class="h-[200px] w-full" ref="wrapper")
+      canvas.w-full.h-full.pointer-events-none1.select-none.touch-none(ref="canvas" resize)
+    .bg-base-300.w-full.py-2
+      div( ref="dragHandler" )
+        .bg-accent.h-6.rounded(
+          class="hover:border"
+          :style="{ transform: `translateX(${-tz.x/tz.k}px)`, width: `calc(${100/tz.k}%)` }"
+          v-drag="handleDrag"
+          )
+          //- pre 123
   
 
 </template>
@@ -21,6 +31,28 @@ import { scaleLinear, scaleOrdinal, tickFormat } from "d3-scale"
 import { nextTick, watch } from 'vue'
 import { useMouseInElement } from '@vueuse/core'
 
+const dragHandler = ref(null)
+const dragHandlerBounds = useElementBounding(dragHandler)
+
+const handleDrag = (s) => {
+  // console.log(s);
+  tz.x -= s.delta[0]*tz.k
+  // let r = wrapperBounds.width.value - wrapperBounds.width.value / tz.k
+  let r = dragHandlerBounds.width.value - dragHandlerBounds.width.value * tz.k
+  if (tz.x > 0) {
+    tz.x = 0
+  } else if (tz.x < r) {
+    tz.x = r
+  }
+  // console.dir(ZoomTransform);
+  zoomObj.value.transform(wrapperSel.value, tz)
+  // xScale.value = tz.rescaleX(xScaleOrigin.value)
+  // setupZoom()
+
+  // if (tz.x / tz.k < r) tz.x = r
+  // console.log(tz.x / tz.k,r);
+}
+
 // import useMeasurements from './useMeasurements'
 
 const props = defineProps({
@@ -34,7 +66,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:xOffset'])
+// const emit = defineEmits(['update:xOffset'])
 // const xOffset = useVModel(props, 'xOffset', emit)
 const xOffset = ref(1)
 
@@ -84,7 +116,7 @@ import usePaper from './usePaper'
 
 const tz = reactive(new ZoomTransform(1,0,0))
 
-const { paper } = usePaper({ canvas, data: props.data, genLine, xScale, xScaleOrigin, yScale, tz, mouse })
+const { paper } = usePaper({ canvas, data: props.data, xScale, xScaleOrigin, yScale, tz, mouse, wrapperBounds })
 
 
 const wrapperSel = computed(() => {
@@ -94,58 +126,56 @@ const wrapperSel = computed(() => {
 let zoomObj = ref()
 
 watch([wrapperBounds.width, sumData, xOffset], () => {
-  // console.log(xOffset.value);
+  // console.log(wrapperBounds.width.value, sumData.value);
+  // console.log('xScale changed', xScale.value.ticks(3));
+  
   xScale.value = scaleLinear([0, sumData.value], [0 ,wrapperBounds.width.value])
   xScaleOrigin.value = xScale.value.copy()
+  xScale.value = tz.rescaleX(xScaleOrigin.value)
+  // console.log(tz.rescaleX(xScaleOrigin.value));
+  setupZoom()
+  // nextTick(() => {
+  //   console.log('xScale changed2', xScale.value.ticks(3));
+  // })
 })
 
 
-
-
-onMounted(() => {  
+function setupZoom() {
   zoomObj.value = zoom()
-  // .scaleExtent([1, sizes.chart.height])
-  .scaleExtent([1, 1000])
-    .translateExtent([[0,0],[wrapperBounds.width.value, wrapperBounds.height.value]])
-    // .on('mousemove', e => {
-      // console.log('start');
-    // })
-    .filter(function(event) {
-      const isMeasurement = event.target.getAttribute('isMeasurement')
-      if (event.target !== event.currentTarget && event.type !== 'wheel' && !isMeasurement) return false
-      return !event.shiftKey
+    .scaleExtent([1, 10000])
+    .translateExtent([[0, 0], [wrapperBounds.width.value, wrapperBounds.height.value]])
+    .filter(function (event) {
+      // const isMeasurement = event.target.getAttribute('isMeasurement')
+      // if (event.target !== event.currentTarget && event.type !== 'wheel' && !isMeasurement) return false
+      // return !event.shiftKey
+      // console.log(event);
+      return event.type === 'wheel'
+      return true
     })
-
+    // .on("zoom.", null)
     .on('zoom', e => {
-      // console.log(e.sourceEvent.target === wrapper.value);
       // console.log(e);
-      // console.log('zoom	');
       xScale.value = e.transform.rescaleX(xScaleOrigin.value)
-      // pos.ss = e.transform
       Object.assign(tz, e.transform)
-    });
+    })
     
-  wrapperSel.value.call(zoomObj.value).on('wheel', e => {
-    zoomObj.value.translateBy(wrapperSel.value, e.deltaX / tz.k, 0)
-    e.preventDefault()
-  });
-
-  wrapperSel.value.on('mousemove click', (e) => {
-    const [x] = pointer(e)
-    pos.bb = bisect(cumsumData.value, xScale.value.invert(x))
-    // pulseIdUnderCursor.value = bisect(cumsumData.value, xScale.value.invert(x))
-  })
+    // console.log(zoomObj.value.transform)
+    
+  wrapperSel.value.call(zoomObj.value)
+    .on('wheel', e => {
+      zoomObj.value.translateBy(wrapperSel.value, e.deltaX / tz.k, 0)
+      e.preventDefault()
+    });
+}
 
 
-})
 /////////////////////////
 
+// import { extractThemeColorsFromDOM } from 'daisyui/src/helpers'
 
-const pos = reactive({
-  x:0, y:0,
-  q1:'', q2:'',
-  ss: {k:1,x:0},
-})
+import {colors, mode} from '../../stores/colors'
+
+
 
 
 

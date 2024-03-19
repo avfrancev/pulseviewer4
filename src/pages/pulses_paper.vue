@@ -1,5 +1,5 @@
 <template lang="pug">
-.container.mx-auto.px-2.mt-4
+.container.mx-auto.px-2.h-full
   //- pre {{ pulses }}
   PulsesViewerPaper(v-bind="{data: currentPulses}")
 
@@ -36,7 +36,7 @@ csvL = csvL.map((d,i) => {
   let level = d["Channel 0"] 
   let width = 0
   if (next) {
-    width = next['Time [s]'] * 1_000_000 - time 
+    width = next['Time [s]'] * 1_000_000 - time
   }
   return {
     time, level, width,

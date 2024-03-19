@@ -4,8 +4,8 @@
     .join-item.btn.btn-outline.btn-accent.btn-active(ref="hello") Button
     .join-item.btn.btn-outline.btn-accent(ref="hello") Button 2
   //- pre {{ mouse }}
-.overflow-hidden
-  router-view
+//- .overflow-hidden
+router-view
 </template>
 
 <script setup>
@@ -17,7 +17,17 @@ const hello = ref()
 
 
 
-<style scoped lang="sass">
-html
+<style lang="sass">
+html, body
   scroll-behavior: smooth
+  height: 100%
+  display: grid
+</style>
+
+<style lang="sass">
+#app
+  // overflow-x: hidden
+  position: relative
+  width: 100%
+  min-height: 100vh
 </style>
