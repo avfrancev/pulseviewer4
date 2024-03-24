@@ -1,61 +1,16 @@
 import { useGesture } from '@vueuse/gesture'
-import { ZoomTransform } from "d3-zoom"
 import { inertia } from 'popmotion'
 
-function constrain(transform, extent, translateExtent) {
-  var dx0 = transform.invertX(extent[0][0]) - translateExtent[0][0],
-    dx1 = transform.invertX(extent[1][0]) - translateExtent[1][0],
-    dy0 = transform.invertY(extent[0][1]) - translateExtent[0][1],
-    dy1 = transform.invertY(extent[1][1]) - translateExtent[1][1];
-  return transform.translate(
-    dx1 > dx0 ? (dx0 + dx1) / 2 : Math.min(0, dx0) || Math.max(0, dx1),
-    dy1 > dy0 ? (dy0 + dy1) / 2 : Math.min(0, dy0) || Math.max(0, dy1)
-  );
-}
+export default (store) => {
+  const { tz } = store
+  // console.log(tz, domTarget);
 
-export default (props) => {
-  const tz = reactive(new ZoomTransform(1, 0, 0))
-
-  tz.translateBy = function (xOffset) {
-    // let translateExtent = [[0, 0], [wrapperBounds.width.value, wrapperBounds.height.value]]
-    this.x += xOffset
-    let constrained = constrain(this, props.extent.value, props.extent.value)
-    Object.assign(this, constrained)
-    props.xScale.value = tz.rescaleX(props.xScaleOrigin.value)
-
-  }
-
-  tz.scaleToPointX = function (scaleFactor, p0) {
-    let scaleExtent = [1, 1000]
-    // let translateExtent = [[0, 0], [wrapperBounds.width.value, wrapperBounds.height.value]]
-
-    let p1 = this.invertX(p0)
-    let newTz = this.scale(scaleFactor)
-    newTz.k = Math.max(scaleExtent[0], Math.min(scaleExtent[1], newTz.k));
-    Object.assign(this, newTz)
-    this.x = p0 - p1 * tz.k
-    this.translateBy(0)
-    // let constrained = constrain(this, translateExtent, translateExtent)
-    // Object.assign(this, constrained)
-    // props.xScale.value = tz.rescaleX(props.xScaleOrigin.value)
-  }
-
-  onMounted(() => {
-    setTimeout(() => {
-      tz.scaleToPointX(1.5, 100)
-      props.xScale.value = tz.rescaleX(props.xScaleOrigin.value)
-
-    }, 0)
-  })
-
-  const tests = reactive({})
-  
   
   const gestures = useGesture({
     onWheel: (e) => {
       e.event.preventDefault()
       if (e.delta[1] !== 0) {
-        let x = props.mouse.elementX.value
+        let x = store.state.mouse.elementX
         const scaleFactor = Math.exp(e.delta[1] * -0.001)
         tz.scaleToPointX(scaleFactor, x)
       }
@@ -86,7 +41,7 @@ export default (props) => {
       }
     },
     onPinch: (e) => {
-      return
+      // return
       // onPinch: (e) => {
       //   console.log(e, 'pich');
       //   let x = e.origin[0] - props.wrapperBounds.left.value
@@ -129,7 +84,8 @@ export default (props) => {
     },
     // onMove: (e) => {}
   }, {
-    domTarget: props.domTarget,
+    domTarget: store.state.wrapper,
+    // domTarget: domTarget,
     // drag: {
     //   delay: 1000,
     // },
@@ -140,5 +96,9 @@ export default (props) => {
     eventOptions: { passive: false },
   })
 
-  return {gestures, tz}
+  // HACK
+  gestures.clean()
+  gestures.bind()
+
+  return {gestures}
 }

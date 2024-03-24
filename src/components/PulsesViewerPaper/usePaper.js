@@ -1,9 +1,12 @@
-import paper, { Group, Path, Point, PointText, Rect } from 'paper/dist/paper-core'
+// import { Group, Path, Point, PointText, Rect } from 'paper/dist/paper-core'
+import paperOrig from 'paper/dist/paper-core'
 import { bisector } from 'd3-array';
 import { colors } from '../../stores/colors'
 import { watchEffect } from 'vue';
 
 import useMeasurements from './useMeasurements.js'
+import { usePulses } from '../../stores/pulses.js';
+import { useStore } from './store';
 
 const createDebounce = (func, delay) => {
   let timeoutId;
@@ -189,26 +192,25 @@ function createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projecte
   //   circle.fillColor = colors.a
   // })
 
-  watch(dataIDUnderCursor, () => {
-    // console.log(dataIDUnderCursor.value);
-    if (!dataIDUnderCursor.value) {
-      topLine.hide()
-      bottomLine.hide()
-      return
-    }
-    topLine.show()
-    bottomLine.show()
-    let d = props.data[dataIDUnderCursor.value - 1]
-    let d2 = props.data[dataIDUnderCursor.value]
-    topLine.update(props.xScaleOrigin.value(d?.time), props.xScaleOrigin.value(d?.time + d?.width), d.width.toFixed())
-    if (!d2) return
-    bottomLine.update(props.xScaleOrigin.value(d?.time), props.xScaleOrigin.value(d?.time + d?.width + d2?.width), (d.width + d2.width).toFixed())
+  // watch(dataIDUnderCursor, () => {
+  //   // console.log(dataIDUnderCursor.value);
+  //   if (!dataIDUnderCursor.value) {
+  //     topLine.hide()
+  //     bottomLine.hide()
+  //     return
+  //   }
+  //   topLine.show()
+  //   bottomLine.show()
+  //   let d = props.data[dataIDUnderCursor.value - 1]
+  //   let d2 = props.data[dataIDUnderCursor.value]
+  //   topLine.update(props.xScaleOrigin.value(d?.time), props.xScaleOrigin.value(d?.time + d?.width), d.width.toFixed())
+  //   if (!d2) return
+  //   bottomLine.update(props.xScaleOrigin.value(d?.time), props.xScaleOrigin.value(d?.time + d?.width + d2?.width), (d.width + d2.width).toFixed())
 
-    return
-  })
+  //   return
+  // })
   
-  // const g = new Group()
-  // scaleingGroup.addChild(g)
+
 
   
   
@@ -280,9 +282,9 @@ function createTestsShapes({paper, props, scaleingGroup}) {
   }
 }
 
-function createTicks({ paper, props, scaleingGroup }) {
-    
-  const ticksGroup = new Group({locked: true})
+function createTicks({ paper, store, scaleingGroup }) {
+  
+  const ticksGroup = new paper.Group({locked: true})
 
   let ticks = []
 
@@ -296,8 +298,8 @@ function createTicks({ paper, props, scaleingGroup }) {
     // scaleingGroup.addChild(ticksGroup)
     nextTick(() => {
       ticks_.forEach((t) => {
-        let x = props.xScale.value(t)
-        let tt = new PointText({
+        let x = store.xScale(t)
+        let tt = new paper.PointText({
           // pivot: [x, 0],
           point: [paper.view.viewToProject(x).x, 10],
           visible: true,
@@ -310,8 +312,8 @@ function createTicks({ paper, props, scaleingGroup }) {
           fontSize: 12,
           parent: ticksGroup
         })
-        tt.scale(1 / props.tz.k, 1)
-        new Path.Line({
+        tt.scale(1 / store.tz.k, 1)
+        new paper.Path.Line({
           from: [paper.view.viewToProject(x).x, 15],
           to: [paper.view.viewToProject(x).x, 200],
           // pivot: [paper.view.viewToProject(x).x, 0],
@@ -334,34 +336,35 @@ function createTicks({ paper, props, scaleingGroup }) {
     })
   })
 
-  let computedTicks = computed(() => props.xScale.value.ticks(3))
+  // console.log(store.xScale.ticks());
+
+  let computedTicks = computed(() => store.xScale.ticks(3))
   
-  watch(props.wrapperBounds.width, () => {
-    // console.log('wrapperBounds.width changed');
-    // // ticksGroup.fitBounds(paper.view.bounds)
-    // setTimeout(() => {
-    //   console.log(props.xScale.value.ticks(3), props.xScaleOrigin.value.ticks(3));
-    //   generateTicks(props.xScale.value.ticks(3))
-    // }, 1000)
-  })
+  // watch(store.state.wrapperBounds.width, () => {
+  //   // console.log('wrapperBounds.width changed');
+  //   // // ticksGroup.fitBounds(paper.view.bounds)
+  //   // setTimeout(() => {
+  //   //   console.log(props.xScale.ticks(3), props.xScaleOrigin.value.ticks(3));
+  //   //   generateTicks(props.xScale.ticks(3))
+  //   // }, 1000)
+  // })
 
   // watch(props.xScale, () => {
-  //   console.log('xScale changed', props.xScale.value.ticks(3));
+  //   console.log('xScale changed', props.xScale.ticks(3));
   // })
   
-  watch(props.tz, () => {
+  watch(store.tz, () => {
     // let x = tickFormat("~s")
-    // console.log(xScale.value.tickFormat(0, 1, 20));
-    // console.log(123);
+    // console.log(xScale.tickFormat(0, 1, 20));
     
     // console.log('TICKS');
     if (ticks.toString() === computedTicks.value.toString()) {
       // console.log('tickz changed');
       nextTick(() => {
         ticksGroup.children.forEach((t) => {
-          // let x = props.xScale.value(t.data)
+          // let x = props.xScale(t.data)
           // t.point = [paper.view.viewToProject(x).x, 10]
-          t.scaling.x = 1/props.tz.k
+          t.scaling.x = 1/store.tz.k
         })
       })
       return
@@ -371,10 +374,10 @@ function createTicks({ paper, props, scaleingGroup }) {
     generateTicks(computedTicks.value)
 
     // paper.view.update()
-    // console.log(xScale.value.ticks().map(d => xScale.value(d)));
-    // console.log(xScale.value.format);
-    // console.log(xScale.value.ticks().map(xScale.value.format("~s")))
-  })
+    // console.log(xScale.ticks().map(d => xScale(d)));
+    // console.log(xScale.format);
+    // console.log(xScale.ticks().map(xScale.format("~s")))
+  }, {immediate: true})
   return { ticksGroup }
 }
 
@@ -433,11 +436,22 @@ function createWidthLabels({ paper, props, scaleingGroup }) {
     throttledUpdateWidthLabels, debouncedUpdateWidthLabels
   }
 }
-function setup(props, { dataIDUnderCursor, projectedX, invertedX }) {
-  const { tz } = props
+
+const papers = {}
+
+function setup(store) {
+  let paper
+
+  const pulsesStore = usePulses()
+  // console.log(pulsesStore);
+
+  const { tz } = store
+  // console.log(tz);
+  papers[store.state.uuid] = new paperOrig.PaperScope()
+  paper = papers[store.state.uuid]
   let m = new paper.Matrix()
 
-  paper.setup(props.canvas.value)
+  paper.setup(store.state.canvas)
 
   // var pulsesPath2 = new Path({
   //   name: "pulsesPath",
@@ -449,29 +463,30 @@ function setup(props, { dataIDUnderCursor, projectedX, invertedX }) {
 
   const backgroundGroup = new paper.Group({ name: 'backgroundGroup'})
   
-  let pulsesPath = new Path({
+  let pulsesPath = new paper.Path({
     name: "pulsesPath",
-    strokeColor: colors.p,
+    strokeColor: new paper.Color(colors.p),
     strokeWidth: 1,
     locked: true,
     strokeScaling: false,
   })
-
-  watch(props.wrapperBounds.width, () => {
-    // console.log(props.wrapperBounds.width.value);
+  // console.log(store.xScale);
+  watch(() => [store.state.wrapperBounds.width, pulsesStore.maxSumWithOffset, store.xScale], () => {
     pulsesPath.removeSegments()
-    props.data.forEach((d) => {
-      pulsesPath.add(new Point(props.xScaleOrigin.value(d.time), d.level ? 150 : 50))
-      pulsesPath.add(new Point(props.xScaleOrigin.value(d.time+d.width), d.level ? 150 : 50))
+    // console.log(store.state.data);
+    store.state.data.forEach((d) => {
+      pulsesPath.add(new paper.Point(store.xScaleOrigin(d.time), d.level ? 150 : 50))
+      pulsesPath.add(new paper.Point(store.xScaleOrigin(d.time+d.width), d.level ? 150 : 50))
     })
   },{ immediate: true })
 
+
   watchEffect(() => {
-    pulsesPath.strokeColor = colors.p
+    pulsesPath.strokeColor = new paper.Color(colors.p)
   })
   
   
-  let scaleingGroup = new Group({locked: true})
+  let scaleingGroup = new paper.Group({locked: true})
 
   // createMeasurement({ props, scaleingGroup, backgroundGroup })
   // const { setupMeasurements, measurements } = useMeasurements()
@@ -495,7 +510,7 @@ function setup(props, { dataIDUnderCursor, projectedX, invertedX }) {
   //   radius: 3
   // });
   // const { circle, circle2 } = createTestsShapes({ paper, props, scaleingGroup })
-  const { ticksGroup } = createTicks({ paper, props, scaleingGroup })
+  const { ticksGroup } = createTicks({ paper, store, scaleingGroup })
   // var circle2 = new Path.Circle(new Point(xx, 100), 3);
   // circle.fillColor = 'red';
   // circle.pivot = [xx, 0]
@@ -510,17 +525,17 @@ function setup(props, { dataIDUnderCursor, projectedX, invertedX }) {
 
 
 
-  createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projectedX, invertedX })
+  // createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projectedX, invertedX })
   
 
 
   // const { throttledUpdateWidthLabels, debouncedUpdateWidthLabels } = createWidthLabels({paper, props, scaleingGroup})
-
-  watch(tz, (p, n) => {
+  watch(store.tz, (p, n) => {
+    // console.log(tz);
     let v = paper.view
 
     v.scaling.x = tz.k
-    v.center = new Point(-tz.x / tz.k + v.bounds.width / 2, v.center.y)
+    v.center = new paper.Point(-tz.x / tz.k + v.bounds.width / 2, v.center.y)
 
     // v.update()
     
@@ -530,26 +545,27 @@ function setup(props, { dataIDUnderCursor, projectedX, invertedX }) {
     m.a = tz.k
     // throttledUpdateWidthLabels()
     // debouncedUpdateWidthLabels()
-  })
+  }, { immediate: true })
 
 
 }
 
-export default (props) => {
-
-  const projectedX = computed(() => {
-    // console.log(paper);
-    if (props.mouse.isOutside.value) return null
-    return paper?.view?.viewToProject(props.mouse.elementX.value).x || 0
-  })
+export default (store) => {
+  // const store = useStore()
+  // console.log(store.state.uuid);
+  // const projectedX = computed(() => {
+  //   // console.log(paper);
+  //   if (store.state.mouse.isOutside.value) return null
+  //   return paper?.view?.viewToProject(store.state.mouse.elementX.value).x || 0
+  // })
   
-  const invertedX = computed(() => props.xScaleOrigin.value.invert(projectedX.value))
+  // const invertedX = computed(() => props.xScaleOrigin.value.invert(projectedX.value))
 
-  const dataIDUnderCursor = computedEager(() => {
-    if (props.mouse.isOutside.value) return null
-    let id = bisector((d) => d.time).right(props.data, invertedX.value)
-    return id
-  })
+  // const dataIDUnderCursor = computedEager(() => {
+  //   if (store.state.mouse.isOutside.value) return null
+  //   let id = bisector((d) => d.time).right(props.data, invertedX.value)
+  //   return id
+  // })
   // watchEffect(() => {
   //   console.log(dataIDUnderCursor.value);
   // })
@@ -563,13 +579,14 @@ export default (props) => {
   
   onMounted(() => {
     nextTick(() => {
-      const setupResult = setup(props, { dataIDUnderCursor, projectedX, invertedX })
+      // setup(store, { dataIDUnderCursor, projectedX, invertedX })
+      setup(store)
       // Object.assign(measurements, setupResult.measurements)
     })
   })
 
   return {
-    paper,
+    // paper,
     // measurements,
     // createMeasurement,
   }

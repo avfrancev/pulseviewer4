@@ -1,8 +1,9 @@
 <template lang="pug">
 .container.mx-auto.px-2.h-full
   //- pre {{ pulses }}
-  PulsesViewerPaper(v-bind="{data: currentPulses}")
-  //- PulsesViewerPaper(v-bind="{data: currentPulses}")
+  //- PulsesViewerPaper(v-bind="{data: pulses[0]}")
+  PulsesViewerPaper(v-bind="{data: ppp[0], zoomID: 1 }")
+  PulsesViewerPaper(v-bind="{data: ppp[1], zoomID: 1, xOffset: -1100 }")
 
 </template>
 
@@ -55,9 +56,32 @@ let spl = sample_pulses_logic.map((d) => {
 })
 //////////////////
 
-// const pulses = reactive([[0,23,23,233,323,212,42,424,242,122,324],[0,123,33,44,22,111,422]])
+// const pulses2 = reactive([[10,23,23,233,323,212,42,424,242,122,324],[10,123,33,44,22,111,422]])
+
+// const ppp = pulses2.map((arr,i) => {
+//   let time = 0
+//   return arr.map((d,i) => {
+//     if (i !== 0)
+//       time += arr[i-1]
+//     return { level: i % 2, width: d, time }
+//   })
+// })
+
+// console.log(ppp[1]);
+
+import { usePulses } from '../stores/pulses'
+const {pulses: ppp} = usePulses()
+
+
 const pulses = reactive([])
+// let csvL1 = csvL.map((d,i) => {
+//   return {...d, time: d.time*2, width: d.width*2}
+// })
+// csvL1[0].width = 1000_000
+// csvL1[1].time = 1000_000
+// console.log(csvL1);
 pulses.push(csvL)
+// // console.log(pulses);
 
 
 
