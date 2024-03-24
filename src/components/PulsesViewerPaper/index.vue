@@ -4,6 +4,12 @@
   //- button.btn(@click="paper.project.activeLayer.matrix.apply()") scale
   //- pre(:style="{background: colors.p}") {{ mouse }}
   button.btn(@click="mode = mode === 'dark' ? 'light' : 'dark'") {{ mode }}
+  //- button.btn(@click="isDragEnabled = !isDragEnabled") isDragEnabled: {{ isDragEnabled }}
+  //- pre.text-xs {{ measurements.map(m => m.state) }}
+  //- pre {{ measurements.length }}
+  //- .flex.text-xs
+    div(v-for="m in measurements.sort((a,b) => a.state.getters.xMin - b.state.getters.xMin)")
+      pre {{ m.state }}
   .flex-1.flex.flex-col.items-center.justify-center
     div(class="h-[200px] w-full" ref="wrapper")
       canvas.w-full.h-full.pointer-events-none1.select-none.touch-none(ref="canvas" resize)
@@ -28,14 +34,18 @@ import { zoom, ZoomTransform, zoomIdentity } from "d3-zoom"
 import { extent, sum, cumsum, bisect, quantile, mean } from "d3-array"
 import { scaleLinear, scaleOrdinal, tickFormat } from "d3-scale"
 // import paper, { Group, Path, Point, PointText, Rect } from 'paper/dist/paper-core'
-import { nextTick, watch } from 'vue'
+import { nextTick, watch, watchEffect } from 'vue'
 import { useMouseInElement } from '@vueuse/core'
+
+import { useStore } from './store'
 
 const dragHandler = ref(null)
 const dragHandlerBounds = useElementBounding(dragHandler)
 
 const handleDrag = (s) => {
   // console.log(s);
+  tz.translateBy(-s.delta[0]*tz.k)
+  return
   tz.x -= s.delta[0]*tz.k
   // let r = wrapperBounds.width.value - wrapperBounds.width.value / tz.k
   let r = dragHandlerBounds.width.value - dragHandlerBounds.width.value * tz.k
@@ -45,7 +55,7 @@ const handleDrag = (s) => {
     tz.x = r
   }
   // console.dir(ZoomTransform);
-  zoomObj.value.transform(wrapperSel.value, tz)
+  // zoomObj.value.transform(wrapperSel.value, tz)
   // xScale.value = tz.rescaleX(xScaleOrigin.value)
   // setupZoom()
 
@@ -99,31 +109,37 @@ const yScale = computed(() => scaleLinear([1,0],[sizes.top.height,sizes.chart.y 
 const xScaleOrigin = ref(scaleLinear())
 const xScale = ref(scaleLinear())
 
-const genLine = computed(() => 
-  line()
-    .x((d,i) => xScaleOrigin.value(d.time))
-    .y((d,i) => yScale.value(d.level))
-    .curve(curveStepAfter)
-)
+// const genLine = computed(() => 
+//   line()
+//     .x((d,i) => xScaleOrigin.value(d.time))
+//     .y((d,i) => yScale.value(d.level))
+//     .curve(curveStepAfter)
+// )
 
 
 /////////////////////////
 
 // const mouse = useMouseInElement(wrapper, { touchAction: 'none' })
 const mouse = useMouseInElement(wrapper)
-import usePaper from './usePaper'
 
-
-const tz = reactive(new ZoomTransform(1,0,0))
-
-const { paper } = usePaper({ canvas, data: props.data, xScale, xScaleOrigin, yScale, tz, mouse, wrapperBounds })
-
-
-const wrapperSel = computed(() => {
-  return select(wrapper.value)
+import usePanZoom from './usePanZoom'
+const { gestures, tz, tests } = usePanZoom({ 
+  domTarget: wrapper,
+  wrapperBounds,
+  extent: computed(() => [[0, 0], [wrapperBounds.width.value, wrapperBounds.height.value]]),
+  xScale, xScaleOrigin,
+  mouse,
 })
 
-let zoomObj = ref()
+import usePaper from './usePaper'
+const { paper } = usePaper({ gestures, canvas, data: props.data, xScale, xScaleOrigin, yScale, tz, mouse, wrapperBounds })
+
+
+// const wrapperSel = computed(() => {
+//   return select(wrapper.value)
+// })
+
+// let zoomObj = ref()
 
 watch([wrapperBounds.width, sumData, xOffset], () => {
   // console.log(wrapperBounds.width.value, sumData.value);
@@ -133,40 +149,65 @@ watch([wrapperBounds.width, sumData, xOffset], () => {
   xScaleOrigin.value = xScale.value.copy()
   xScale.value = tz.rescaleX(xScaleOrigin.value)
   // console.log(tz.rescaleX(xScaleOrigin.value));
-  setupZoom()
+  // setupZoom()
   // nextTick(() => {
   //   console.log('xScale changed2', xScale.value.ticks(3));
   // })
 })
 
+// console.log(gesture);
 
-function setupZoom() {
-  zoomObj.value = zoom()
-    .scaleExtent([1, 10000])
-    .translateExtent([[0, 0], [wrapperBounds.width.value, wrapperBounds.height.value]])
-    .filter(function (event) {
-      // const isMeasurement = event.target.getAttribute('isMeasurement')
-      // if (event.target !== event.currentTarget && event.type !== 'wheel' && !isMeasurement) return false
-      // return !event.shiftKey
-      // console.log(event);
-      return event.type === 'wheel'
-      return true
-    })
-    // .on("zoom.", null)
-    .on('zoom', e => {
-      // console.log(e);
-      xScale.value = e.transform.rescaleX(xScaleOrigin.value)
-      Object.assign(tz, e.transform)
-    })
+// zoomObj.value = setupZoom()
+
+
+
+// function setupZoom() {
+//   return zoom()
+//     .scaleExtent([1, 10000])
+//     .translateExtent([[0, 0], [wrapperBounds.width.value, wrapperBounds.height.value]])
+//     // .filter(function (event) {
+//     //   // const isMeasurement = event.target.getAttribute('isMeasurement')
+//     //   // if (event.target !== event.currentTarget && event.type !== 'wheel' && !isMeasurement) return false
+//     //   // return !event.shiftKey
+//     //   // console.log(event);
+//     //   return event.type === 'wheel'
+//     //   return true
+//     // })
+//     // // .on("zoom.", null)
+//     // .on('zoom', e => {
+//     //   // console.log(e);
+//     //   xScale.value = e.transform.rescaleX(xScaleOrigin.value)
+//     //   Object.assign(tz, e.transform)
+//     // })
+// }
+
+// function setupZoom_() {
+//   zoomObj.value = zoom()
+//     .scaleExtent([1, 10000])
+//     .translateExtent([[0, 0], [wrapperBounds.width.value, wrapperBounds.height.value]])
+//     .filter(function (event) {
+//       // const isMeasurement = event.target.getAttribute('isMeasurement')
+//       // if (event.target !== event.currentTarget && event.type !== 'wheel' && !isMeasurement) return false
+//       // return !event.shiftKey
+//       // console.log(event);
+//       return event.type === 'wheel'
+//       return true
+//     })
+//     // .on("zoom.", null)
+//     .on('zoom', e => {
+//       // console.log(e);
+//       xScale.value = e.transform.rescaleX(xScaleOrigin.value)
+//       Object.assign(tz, e.transform)
+//     })
     
-    // console.log(zoomObj.value.transform)
+//     // console.log(zoomObj.value.transform)
     
-  wrapperSel.value.call(zoomObj.value)
-    .on('wheel', e => {
-      zoomObj.value.translateBy(wrapperSel.value, e.deltaX / tz.k, 0)
-      e.preventDefault()
-    });
-}
+//   wrapperSel.value.call(zoomObj.value)
+//     .on('wheel', e => {
+//       zoomObj.value.translateBy(wrapperSel.value, e.deltaX / tz.k, 0)
+//       e.preventDefault()
+//     });
+// }
 
 
 /////////////////////////
@@ -174,6 +215,7 @@ function setupZoom() {
 // import { extractThemeColorsFromDOM } from 'daisyui/src/helpers'
 
 import {colors, mode} from '../../stores/colors'
+// import usePanZoom from './usePanZoom'
 
 
 

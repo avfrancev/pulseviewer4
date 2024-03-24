@@ -2,6 +2,7 @@
 .container.mx-auto.px-2.h-full
   //- pre {{ pulses }}
   PulsesViewerPaper(v-bind="{data: currentPulses}")
+  //- PulsesViewerPaper(v-bind="{data: currentPulses}")
 
 </template>
 

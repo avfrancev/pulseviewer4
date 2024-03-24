@@ -3,6 +3,7 @@ import { bisector } from 'd3-array';
 import { colors } from '../../stores/colors'
 import { watchEffect } from 'vue';
 
+import useMeasurements from './useMeasurements.js'
 
 const createDebounce = (func, delay) => {
   let timeoutId;
@@ -33,122 +34,22 @@ const createThrottle = (func, delay) => {
   };
 };
 
-const createMeasurement = ({props, scaleingGroup}) => {
-  let rect = new Path.Rectangle({
-    point: [120, 0],
-    size: [200, 100],
-    // pivot: [0, 0],
-    fillColor: colors.bc,
-    strokeColor: 'rgba(0,0,0,0.0001)',
-    strokeWidth: 2,
-    strokeCap: 'round',
-    // opacity: 0.3,
-    // selected: true,
-    // parent: scaleingGroup,
-    // dashArray: [5,5],
-    strokeScaling: false,
-    strokeJoin: 'round',
-    data: {
-      canDrag: true
-    }
-  })
-  console.log(rect);
-
-  rect.selected = true
-
-  let t = new paper.Tool()
-  var hitOptions = {
-    // segments: false,
-    stroke: true,
-    fill: true,
-    // curves: true,
-    // 'handle-in': true,
-    // fill: false,
-    // tolerance: 5
-  };
-  let hitResult = null
-  let curve = null
-
-  // t.onMouseMove = function(e) {
-  //   hitOptions.tolerance = 10 / props.tz.k
-  //   hitResult = paper.project.hitTest(e.point, hitOptions)
-  //   console.log(hitResult);
-  // }
-  rect.onMouseDown = function(e) {
-    // return
-    hitOptions.tolerance = 7 / props.tz.k
-    hitResult = paper.project.hitTest(e.point, hitOptions)
-    // console.log(hitResult);
-    if (!hitResult) return
-    if (hitResult.location?.curve) {
-      curve = hitResult.location.curve
-    }
-    if (hitResult.segment?.curve) {
-      curve = hitResult.segment.location.curve
-    }
-    // curve.selected = true
-    // let b = hitResult.item.bounds
-    // let location = hitResult.location
-    // hitResult = hitResult?.item
-    // if (hitResult?.type == 'stroke') {
-      // console.log(hitResult.item.bounds);
-      // hitResult.item.bounds.width += e.delta.x
-      // hitResult.location.point.x += e.delta.x
-      // location.point
-      // e.item.position.x += e.delta.x
-      // }
-  }
-    
-  rect.onMouseDrag = function(e) {
-    // console.log(hitResult);
-    if (hitResult && hitResult.type === 'fill') {
-      hitResult.item.position.x += e.delta.x
-      return
-    }
-    if (curve && hitResult && hitResult.type === 'stroke') {
-
-      // console.log(curve);
-      let { segment1, segment2 } = curve
-      if (segment1.point.y === segment2.point.y) return
-      // console.log(segment1.point.y, segment2.point.y);
-      // if (segment1.point.y === segment2.point.y) return
-      // segment1.point.selected = true
-      segment1.point.x += e.delta.x
-      segment2.point.x += e.delta.x
-      return
-    }
-    // console.log(hitResult.item.bounds.width, hitResult.item.bounds);
-  }
-  //   if (hitResult?.type == 'stroke') {
-  //     hitResult.item?.bounds.width += e.delta.x
-  //     // hitResult.location.point.x += e.delta.x
-  //   }
-  // }
-  // console.log(paper.view.element);
-  // paper.view.element.onmousedown = (event) => {
-  //   console.log(event);
-  // }
-  // rect.onMouseDrag = function (event) {
-  //   console.log(event);
-  //   // rect.position.x += event.delta.x;
-  // }
-}
 
 function createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projectedX, invertedX }) {
-  let p = new Path({
-    segments: [[0, 0], [0, 200]],
-    pivot: [0, 0],
-    // strokeColor: colors.n,
-    strokeWidth: 1,
-    strokeCap: 'round',
-    opacity: 0.3,
-    locked: true,
-    // selected: true,
-    // parent: scaleingGroup,
-    dashArray: [5,5],
-    strokeScaling: false,
-    strokeJoin: 'round',
-  })
+  // let p = new Path({
+  //   segments: [[0, 0], [0, 200]],
+  //   // pivot: [0, 0],
+  //   // strokeColor: colors.n,
+  //   strokeWidth: 0.5,
+  //   strokeCap: 'round',
+  //   // opacity: 0.3,
+  //   locked: true,
+  //   // selected: true,
+  //   // parent: scaleingGroup,
+  //   dashArray: [5,5],
+  //   strokeScaling: false,
+  //   strokeJoin: 'round',
+  // })
   
   var circle = new Path.Circle({
     center: [200, 110],
@@ -160,10 +61,10 @@ function createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projecte
   
 
   watch(() => [projectedX.value], () => {
-    p.position.x = projectedX.value
+    // p.position.x = projectedX.value
     const pulsesPath = paper.project.activeLayer.children.pulsesPath
-    let intersection = pulsesPath.getIntersections(p)
-    circle.position = intersection[0]?.point
+    // let intersection = pulsesPath.getIntersections(p)
+    // circle.position = intersection[0]?.point
   })
 
   const intersection = computed(() => {
@@ -174,6 +75,7 @@ function createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projecte
 
   let arrowPath_ = new Path({
     segments: [[0, 0], [0, 6], [6, 3]],
+    locked: true,
     // pivot: [6,0],
     // fillColor: 'white',
     strokeScaling: false,
@@ -188,14 +90,18 @@ function createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projecte
     la.position.y = y
     la.parent = scaleingGroup
     la.rotate(180)
+    la.locked = true
+    
     let ra = arrowDefinition.place()
     ra.pivot = [3, 0]
     ra.position.y = y
     ra.parent = scaleingGroup
+    ra.locked = true
     let l = new Path({
       segments: [[0, 0], [0, 0]],
       position: [0, y],
       strokeScaling: false,
+      locked: true,
     })
     let t = new PointText({
       point: [0, 0],
@@ -278,10 +184,10 @@ function createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projecte
   let topLine = createDimentionLine({y: 40, textDy: -10})
   let bottomLine = createDimentionLine({y: 160, textDy: 10})
 
-  watchEffect(() => {
-    p.strokeColor = colors.bc
-    circle.fillColor = colors.a
-  })
+  // watchEffect(() => {
+  //   p.strokeColor = colors.bc
+  //   circle.fillColor = colors.a
+  // })
 
   watch(dataIDUnderCursor, () => {
     // console.log(dataIDUnderCursor.value);
@@ -376,7 +282,7 @@ function createTestsShapes({paper, props, scaleingGroup}) {
 
 function createTicks({ paper, props, scaleingGroup }) {
     
-  const ticksGroup = new Group()
+  const ticksGroup = new Group({locked: true})
 
   let ticks = []
 
@@ -384,7 +290,7 @@ function createTicks({ paper, props, scaleingGroup }) {
     // console.log({ticks_});
     ticks = [...ticks_]
     ticksGroup.removeChildren()
-    ticksGroup.sendToBack()
+    // ticksGroup.sendToBack()
     // console.log(paper);
 
     // scaleingGroup.addChild(ticksGroup)
@@ -443,7 +349,7 @@ function createTicks({ paper, props, scaleingGroup }) {
   //   console.log('xScale changed', props.xScale.value.ticks(3));
   // })
   
-  watchEffect(() => {
+  watch(props.tz, () => {
     // let x = tickFormat("~s")
     // console.log(xScale.value.tickFormat(0, 1, 20));
     // console.log(123);
@@ -541,6 +447,8 @@ function setup(props, { dataIDUnderCursor, projectedX, invertedX }) {
   //   strokeScaling: false,
   // });
 
+  const backgroundGroup = new paper.Group({ name: 'backgroundGroup'})
+  
   let pulsesPath = new Path({
     name: "pulsesPath",
     strokeColor: colors.p,
@@ -563,9 +471,18 @@ function setup(props, { dataIDUnderCursor, projectedX, invertedX }) {
   })
   
   
-  let scaleingGroup = new Group()
+  let scaleingGroup = new Group({locked: true})
 
-  createMeasurement({ props, scaleingGroup })
+  // createMeasurement({ props, scaleingGroup, backgroundGroup })
+  // const { setupMeasurements, measurements } = useMeasurements()
+  ////////////////////////////////////
+  // const { measurements, createMeasurement } = useMeasurements({ props, scaleingGroup, backgroundGroup })
+  // createMeasurement(100,100, 's')
+  // createMeasurement(300,100, 'a')
+  ////////////////////////////////////
+  // const um2 = useMeasurements({LAS: 1223})
+  // setupMeasurements()
+  // um2.setupMeasurements({ props, scaleingGroup, backgroundGroup: null })
 
   // paper.view.autoUpdate = false
   // console.log(paper.project);
@@ -593,7 +510,7 @@ function setup(props, { dataIDUnderCursor, projectedX, invertedX }) {
 
 
 
-  // createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projectedX, invertedX })
+  createCursor({ paper, props, scaleingGroup, dataIDUnderCursor, projectedX, invertedX })
   
 
 
@@ -636,14 +553,24 @@ export default (props) => {
   // watchEffect(() => {
   //   console.log(dataIDUnderCursor.value);
   // })
+
+  // let measurements = reactive([])
+  // let createMeasurement = function(){}
+  // const { measurements, createMeasurement } = useMeasurements({ props, scaleingGroup, backgroundGroup })
+  // createMeasurement(100, 100, 's')
+  // createMeasurement(300, 100, 'a')
+
   
   onMounted(() => {
     nextTick(() => {
-      setup(props, { dataIDUnderCursor, projectedX, invertedX })
+      const setupResult = setup(props, { dataIDUnderCursor, projectedX, invertedX })
+      // Object.assign(measurements, setupResult.measurements)
     })
   })
 
   return {
-    paper
+    paper,
+    // measurements,
+    // createMeasurement,
   }
 }

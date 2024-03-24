@@ -11,6 +11,7 @@ declare module 'vue' {
     'ILucide:locateFixed': typeof import('~icons/lucide/locate-fixed')['default']
     'IPajamas:remove': typeof import('~icons/pajamas/remove')['default']
     'ITabler:rulerMeasure': typeof import('~icons/tabler/ruler-measure')['default']
+    Measurements: typeof import('./src/components/PulsesViewerPaper/measurements.js')['default']
     MeasurementsMeta: typeof import('./src/components/PulsesViewer/MeasurementsMeta.vue')['default']
     PieChart: typeof import('./src/components/PieChart.js')['default']
     PulsesViewer: typeof import('./src/components/PulsesViewer/index.vue')['default']
@@ -18,7 +19,9 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Shader2d: typeof import('./src/components/shader-2d.vue')['default']
+    Store: typeof import('./src/components/PulsesViewerPaper/store.js')['default']
     UseMeasurements: typeof import('./src/components/PulsesViewer/useMeasurements.js')['default']
+    UsePanZoom: typeof import('./src/components/PulsesViewerPaper/usePanZoom.js')['default']
     UsePaper: typeof import('./src/components/PulsesViewerPaper/usePaper.js')['default']
   }
 }

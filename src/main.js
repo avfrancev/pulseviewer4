@@ -3,24 +3,22 @@ import './style.css'
 import App from './App.vue'
 import { GesturePlugin } from '@vueuse/gesture'
 import { createRouter, createWebHistory } from 'vue-router'
+import { createPinia } from 'pinia'
 import routes from '~pages'
 
-import { createYmaps } from 'vue-yandex-maps';
-
+const pinia = createPinia()
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
 })
 
-createApp(App)
-.use(router)
-.use(GesturePlugin)
-.use(createYmaps({
-    apikey: 'a0212be8-caa5-4f01-8dc3-9ec59a4348bb',
-    // lang: 'ru_RU',
-    // coordorder: 'latlong',
-    // enterprise: false,
-    // version: '2.1'
-}))
-.mount('#app')
+const app = createApp(App)
+
+// app.config.performance = true;
+app.config.devtools = true;
+
+app.use(pinia)
+app.use(router)
+app.use(GesturePlugin)
+app.mount('#app')
